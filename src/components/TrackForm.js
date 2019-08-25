@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TrackForm = props => {
   const { track } = props;
@@ -13,6 +14,21 @@ const TrackForm = props => {
       <input />
     </form>
   );
+};
+
+TrackForm.propTypes = {
+  track: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  artist: PropTypes.object.isRequired,
+  explicit: PropTypes.bool,
+  isrc: PropTypes.string,
+  lyrics: PropTypes.string
+};
+
+TrackForm.defaultProps = {
+  explicit: null,
+  isrc: '',
+  lyrics: ''
 };
 
 export default TrackForm;

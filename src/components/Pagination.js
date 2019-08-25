@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Pagination = props => {
   const { page, setPage, tracksPerPage, setTracksPerPage } = props;
@@ -21,6 +22,13 @@ const Pagination = props => {
       </select>
     </section>
   );
+};
+
+Pagination.propTypes = {
+  page: PropTypes.number.isRequired,
+  setPage: PropTypes.func.isRequired,
+  tracksPerPage: PropTypes.number.isRequired,
+  setTracksPerPage: PropTypes.func.isRequired
 };
 
 export default Pagination;

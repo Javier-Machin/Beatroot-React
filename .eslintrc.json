@@ -20,6 +20,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": ["error", "never"],
     "object-curly-newline": "off",
-    "arrow-parens": "off"
+    "arrow-parens": "off",
+    "react/forbid-prop-types": "off"
   }
 }
