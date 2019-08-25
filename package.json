@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node ./lib/cors-anywhere.js & react-scripts start",
     "build": "react-scripts build",
-    "test": "npm run script-test -- --coverage",
-    "test-husky": "npm run script-test -- --coverage --watchAll=false",
+    "test": "npm run script-test -- --coverage --watchAll=false",
+    "test-watch": "npm run script-test -- --coverage",
     "script-test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test-husky"
+      "pre-commit": "npm test"
     }
   },
   "browserslist": {

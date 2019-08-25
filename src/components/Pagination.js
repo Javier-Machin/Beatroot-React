@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './css/pagination.css';
 
 const Pagination = props => {
   const { page, setPage, tracksPerPage, setTracksPerPage } = props;
@@ -10,6 +11,11 @@ const Pagination = props => {
 
   return (
     <section className="pagination-container">
+      <div className="arrows-container">
+        <ion-icon name="arrow-back" />
+        <span className="pagination-page">{page}</span>
+        <ion-icon name="arrow-forward" />
+      </div>
       <div className="select-container">
         <span>Tracks per page</span>
         <select
@@ -23,6 +29,7 @@ const Pagination = props => {
           <option value={15}> 15 </option>
         </select>
       </div>
+
     </section>
   );
 };
