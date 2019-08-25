@@ -14,6 +14,11 @@ const Header = props => {
 
   const { prev_page: prevPage, next_page: nextPage } = paginationData;
 
+  // String to prevent passing a boolean to className (React will complain otherwise)
+
+  const backButtonClass = String(!prevPage && 'disabled');
+  const forwardButtonClass = String(!nextPage && 'disabled');
+
   const handleSelectOnChange = ({ target }) => {
     setTracksPerPage(target.value);
   };
@@ -35,7 +40,8 @@ const Header = props => {
           disabled={!prevPage}
           name="back"
           type="button"
-          className={!prevPage && 'disabled'}
+          data-testid="back-button"
+          className={backButtonClass}
           onClick={handleArrowOnClick}
         >
           <ion-icon
@@ -47,7 +53,8 @@ const Header = props => {
           disabled={!nextPage}
           name="forward"
           type="button"
-          className={!nextPage && 'disabled'}
+          data-testid="forward-button"
+          className={forwardButtonClass}
           onClick={handleArrowOnClick}
         >
           <ion-icon name="arrow-forward" />
@@ -73,13 +80,13 @@ const Header = props => {
 Header.propTypes = {
   page: PropTypes.number.isRequired,
   setPage: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  paginationData: PropTypes.object.isRequired,
+  setTracksPerPage: PropTypes.func.isRequired,
   tracksPerPage: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
-  ]).isRequired,
-  setTracksPerPage: PropTypes.func.isRequired,
-  paginationData: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  ]).isRequired
 };
 
 export default Header;

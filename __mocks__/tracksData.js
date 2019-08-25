@@ -15,9 +15,21 @@ const getTracksMockData = (numOfTracks = 5) => {
   return tracks;
 };
 
-const getPaginationMockData = () => ({
+// Generates pagination data for tests
+
+const getPaginationMockData = (
+  current_page = 1,
+  prev_page = null,
+  next_page = 2,
+  total_pages = 2,
+  total_count = 14
+) => ({
   pagination: {
-    current_page: 1, next_page: 2, prev_page: null, total_pages: 2, total_count: 14
+    current_page,
+    next_page,
+    prev_page,
+    total_pages,
+    total_count
   }
 });
 

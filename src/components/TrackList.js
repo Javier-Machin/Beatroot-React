@@ -9,7 +9,7 @@ const TrackList = props => {
     <section className="tracklist-container">
       {!loading ? tracks.map((track, index) => {
         const testId = `track-${index + 1}`;
-        const uniqueKey = Date.now() + Math.random();
+        const uniqueKey = Date.now() + Math.random() + index;
         return (
           <div
             className="track-container"
@@ -24,7 +24,7 @@ const TrackList = props => {
           </div>
         );
       }) : (
-        <div>Loading</div>
+        <p className="loading">Loading</p>
       )}
     </section>
   );
