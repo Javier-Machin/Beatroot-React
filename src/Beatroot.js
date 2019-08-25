@@ -5,13 +5,17 @@ import Header from './components/Header';
 import './components/css/beatroot.css';
 
 const Beatroot = () => {
-  const [tracks, setTracks] = useState([]);
   const [paginationData, setPaginationData] = useState({});
-  const [loading, setLoading] = useState(false);
   const [tracksPerPage, setTracksPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
+  const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
 
-  // Fetch tracklist on mount or pagination changes
+  /**
+   * Fetch tracks on mount and pagination changes
+   * The returned function is called on unmount, stops any non-resolved request
+   */
+
   useEffect(() => {
     setLoading(true);
     let stopRequest = false;
@@ -22,7 +26,6 @@ const Beatroot = () => {
         setLoading(false);
       }
     });
-    // called on unmount to prevent the request
     return () => {
       stopRequest = true;
     };
@@ -36,8 +39,12 @@ const Beatroot = () => {
         tracksPerPage={tracksPerPage}
         setTracksPerPage={setTracksPerPage}
         paginationData={paginationData}
+        loading={loading}
       />
-      <TrackList tracks={tracks} loading={loading} />
+      <TrackList
+        tracks={tracks}
+        loading={loading}
+      />
     </main>
   );
 };

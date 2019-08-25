@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 import './css/header.css';
 
 const Header = props => {
-  const { page, setPage, tracksPerPage, setTracksPerPage } = props;
+  const {
+    page,
+    setPage,
+    tracksPerPage,
+    setTracksPerPage,
+    paginationData,
+    loading
+  } = props;
+
+  const { prev_page: prevPage, next_page: nextPage } = paginationData;
 
   const handleSelectOnChange = ({ target }) => {
     setTracksPerPage(target.value);
   };
 
   const handleArrowOnClick = ({ target }) => {
+    if (loading) return;
     if (target.name.includes('back')) setPage(page - 1);
     if (target.name.includes('forward')) setPage(page + 1);
   };
@@ -21,11 +31,25 @@ const Header = props => {
         <span className="logo logo-secondary">Lite</span>
       </div>
       <div className="arrows-container">
-        <button name="back" type="button" onClick={handleArrowOnClick}>
-          <ion-icon name="arrow-back" />
+        <button
+          disabled={!prevPage}
+          name="back"
+          type="button"
+          className={!prevPage && 'disabled'}
+          onClick={handleArrowOnClick}
+        >
+          <ion-icon
+            name="arrow-back"
+          />
         </button>
         <span className="header-page-number">{page}</span>
-        <button name="forward" type="button" onClick={handleArrowOnClick}>
+        <button
+          disabled={!nextPage}
+          name="forward"
+          type="button"
+          className={!nextPage && 'disabled'}
+          onClick={handleArrowOnClick}
+        >
           <ion-icon name="arrow-forward" />
         </button>
       </div>
@@ -53,7 +77,9 @@ Header.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]).isRequired,
-  setTracksPerPage: PropTypes.func.isRequired
+  setTracksPerPage: PropTypes.func.isRequired,
+  paginationData: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default Header;

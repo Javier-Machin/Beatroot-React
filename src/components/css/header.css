@@ -38,6 +38,31 @@
   border: none;
   background: transparent;
   outline-color: var(--main-color);
+  overflow: hidden;
+}
+
+ion-icon {
+  font-size: 48px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+ion-icon:hover {
+  transform: scale(1.2);
+}
+
+.disabled ion-icon {
+  cursor: not-allowed;
+}
+
+.disabled:hover ion-icon {
+  transform: scale(1);
+}
+
+.header-page-number {
+  align-self: center;
+  font-size: 24px;
+  color: black;
 }
 
 .select-container {
@@ -57,20 +82,4 @@
   background-color: white;
   cursor: pointer;
   outline-color: var(--main-color);
-}
-
-.header-page-number {
-  align-self: center;
-  font-size: 24px;
-  color: black;
-}
-
-ion-icon {
-  font-size: 48px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-ion-icon:hover {
-  transform: scale(1.2);
 }
