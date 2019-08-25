@@ -10,9 +10,14 @@ const Beatroot = () => {
 
   // Fetch tracklist on mount or changes on pagination
   useEffect(() => {
+    let stopRequest = false;
     getTracks(page, tracksPerPage).then(responseTracks => {
-      setTracks(responseTracks);
+      if (!stopRequest) setTracks(responseTracks);
     });
+    // called on unmount to prevent the request
+    return () => {
+      stopRequest = true;
+    };
   }, [page, tracksPerPage]);
 
   return (

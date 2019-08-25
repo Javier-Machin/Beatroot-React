@@ -7,16 +7,22 @@ const beatrootApi = Axios.create({
 });
 
 const getTracks = async (page = 1, tracksPerPage = 10) => {
-  const response = await beatrootApi.get(`tracks?page=${page}&per_page=${tracksPerPage}`);
-  const tracks = response.data.tracks.map(track => ({
-    title: track.title,
-    artist: track.artist,
-    explicit: track.explicit,
-    isrc: track.isrc,
-    lyrics: track.lyrics
-  }));
+  try {
+    const response = await beatrootApi.get(
+      `tracks?page=${page}&per_page=${tracksPerPage}`
+    );
+    const tracks = response.data.tracks.map(track => ({
+      title: track.title,
+      artist: track.artist,
+      explicit: track.explicit,
+      isrc: track.isrc,
+      lyrics: track.lyrics
+    }));
 
-  return tracks;
+    return tracks;
+  } catch (error) {
+    return { error };
+  }
 };
 
 export { getTracks as default };
