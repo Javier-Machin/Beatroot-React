@@ -5,7 +5,7 @@ import { render, fireEvent, waitForElement } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import nock from 'nock';
 import Beatroot from '../../Beatroot';
-import getTracksMockData from '../../../__mocks__/tracksData';
+import { getTracksMockData, getPaginationMockData } from '../../../__mocks__/tracksData';
 
 /** Nock initialization to intercept api requests */
 
@@ -20,7 +20,7 @@ beforeEach(() => {
     .query({ page: 1, per_page: 10 })
     .reply(
       200,
-      { tracks: getTracksMockData(10) },
+      { tracks: getTracksMockData(10), meta: getPaginationMockData() },
     );
 });
 
@@ -48,7 +48,7 @@ test('changing pagination displays updated track list correctly', async () => {
     .query({ page: 1, per_page: 15 })
     .reply(
       200,
-      { tracks: getTracksMockData(15) },
+      { tracks: getTracksMockData(15), meta: getPaginationMockData() },
     );
 
   // Change tracks per page

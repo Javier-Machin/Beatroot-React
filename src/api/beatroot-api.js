@@ -19,7 +19,9 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
       lyrics: track.lyrics
     }));
 
-    return tracks;
+    const paginationData = response.data.meta.pagination;
+
+    return { tracks, paginationData };
   } catch (error) {
     return { error };
   }

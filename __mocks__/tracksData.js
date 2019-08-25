@@ -15,4 +15,10 @@ const getTracksMockData = (numOfTracks = 5) => {
   return tracks;
 };
 
-export { getTracksMockData as default };
+const getPaginationMockData = () => ({
+  pagination: {
+    current_page: 1, next_page: 2, prev_page: null, total_pages: 2, total_count: 14
+  }
+});
+
+export { getTracksMockData, getPaginationMockData };

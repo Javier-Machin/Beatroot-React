@@ -1,16 +1,43 @@
-.pagination-container {
+.header-container {
   display: grid;
   grid-template-areas: 'a b b b c';
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  background-color: lightblue;
+  background-color: white;
   padding: 0.5rem;
-  border-radius: 4px 4px 0 0;
+  border-radius: 3px 3px 0 0;
+  border: 2px solid var(--main-color);
+  border-bottom: none;
+}
+
+.logo-container {
+  display: flex;
+}
+
+.logo {
+  align-self: center;
+  color: var(--main-color);
+}
+
+.logo-main {
+  font-size: 2rem;
+}
+
+.logo-secondary {
+  margin-top: 1rem;
+  font-size: 1rem;
 }
 
 .arrows-container {
   display: flex;
   grid-area: b;
   justify-content: space-evenly;
+  color: var(--main-color);
+}
+
+.arrows-container button {
+  border: none;
+  background: transparent;
+  outline-color: var(--main-color);
 }
 
 .select-container {
@@ -26,14 +53,16 @@
   width: 50%;
   align-self: center;
   border-radius: 3px;
-  border: none;
+  border: 1px solid var(--main-color);
   background-color: white;
   cursor: pointer;
+  outline-color: var(--main-color);
 }
 
-.pagination-page {
+.header-page-number {
   align-self: center;
   font-size: 24px;
+  color: black;
 }
 
 ion-icon {
