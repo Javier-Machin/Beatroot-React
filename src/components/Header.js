@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/header.css';
+import arrow from './images/arrow.png';
 
 const Header = props => {
   const {
@@ -21,6 +22,7 @@ const Header = props => {
 
   const handleSelectOnChange = ({ target }) => {
     setTracksPerPage(target.value);
+    setPage(1);
   };
 
   const handleArrowOnClick = ({ target }) => {
@@ -44,9 +46,7 @@ const Header = props => {
           className={backButtonClass}
           onClick={handleArrowOnClick}
         >
-          <ion-icon
-            name="arrow-back"
-          />
+          <img className="arrow arrow-back" alt="arrow back" src={arrow} name="arrow-back" />
         </button>
         <span className="header-page-number">{page}</span>
         <button
@@ -57,7 +57,7 @@ const Header = props => {
           className={forwardButtonClass}
           onClick={handleArrowOnClick}
         >
-          <ion-icon name="arrow-forward" />
+          <img className="arrow arrow-forward" alt="arrow forward" src={arrow} name="arrow-forward" />
         </button>
       </div>
       <div className="select-container">

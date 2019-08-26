@@ -16,6 +16,7 @@
 .logo {
   align-self: center;
   color: var(--main-color);
+  cursor: default;
 }
 
 .logo-main {
@@ -41,28 +42,37 @@
   overflow: hidden;
 }
 
-ion-icon {
+.arrow {
   font-size: 48px;
   cursor: pointer;
   transition: all 0.3s;
+  width: 30px;
 }
 
-ion-icon:hover {
+.arrow:hover {
   transform: scale(1.2);
 }
 
-.disabled ion-icon {
+.disabled .arrow {
   cursor: not-allowed;
+  filter: opacity(40%);
 }
 
-.disabled:hover ion-icon {
+.disabled:hover .arrow {
   transform: scale(1);
+}
+
+.disabled:hover .arrow-forward,
+.arrow-forward,
+.arrow-forward:hover {
+  transform: rotate(180deg);
 }
 
 .header-page-number {
   align-self: center;
   font-size: 24px;
   color: black;
+  cursor: default;
 }
 
 .select-container {
@@ -71,6 +81,10 @@ ion-icon:hover {
   justify-self: center;
   grid-area: c;
   min-width: 0;
+}
+
+.select-container span {
+  cursor: default;
 }
 
 .select-container select {

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './css/tracklist.css';
+import trackImage from './images/track.png';
+import deleteIcon from './images/delete.png';
+import editIcon from './images/edit.png';
+import lyricsIcon from './images/lyrics.png';
+import explicitIcon from './images/explicit.png';
 
 const TrackList = props => {
   const { tracks, loading } = props;
@@ -8,6 +13,7 @@ const TrackList = props => {
   return (
     <section className="tracklist-container">
       {!loading ? tracks.map((track, index) => {
+        const { title, artist, explicit = true, isrc, lyrics = 'some lyrics' } = track;
         const testId = `track-${index + 1}`;
         const uniqueKey = Date.now() + Math.random() + index;
         return (
@@ -16,11 +22,56 @@ const TrackList = props => {
             data-testid={testId}
             key={uniqueKey}
           >
-            <p>{track.title}</p>
-            <p>{track.artist.name}</p>
-            <p>{track.explicit}</p>
-            <p>{track.isrc}</p>
-            <p>{track.lyrics}</p>
+            <img className="track-image" alt="track cover art" src={trackImage} />
+            <div className="track-title-container">
+              <p className="track-title">{title}</p>
+              <p className="track-artist">{artist.name}</p>
+            </div>
+            <div className="track-icons-container">
+              <button
+                name="delete"
+                type="button"
+              >
+                <img
+                  name="img-delete"
+                  className="icon icon-delete"
+                  alt="icon to delete"
+                  src={deleteIcon}
+                />
+              </button>
+              <button
+                name="edit"
+                type="button"
+              >
+                <img
+                  name="img-edit"
+                  className="icon icon-edit"
+                  alt="icon to edit"
+                  src={editIcon}
+                />
+              </button>
+              {!!lyrics && (
+                <button
+                  name="lyrics"
+                  type="button"
+                >
+                  <img
+                    name="img-lyrics"
+                    className="icon icon-lyrics"
+                    alt="icon to lyrics"
+                    src={lyricsIcon}
+                  />
+                </button>
+              )}
+              {!!explicit && (
+                <img
+                  className="icon icon-explicit"
+                  alt="18 plus icon"
+                  src={explicitIcon}
+                />
+              )}
+            </div>
+            <p className="track-isrc">{isrc}</p>
           </div>
         );
       }) : (
