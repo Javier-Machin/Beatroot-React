@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import arrow from '../assets/arrow.png';
 import './css/header.css';
-import arrow from './images/arrow.png';
 
 const Header = props => {
   const {

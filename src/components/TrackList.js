@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import trackImage from '../assets/track.png';
+import deleteIcon from '../assets/delete.png';
+import editIcon from '../assets/edit.png';
+import lyricsIcon from '../assets/lyrics.png';
+import explicitIcon from '../assets/explicit.png';
 import './css/tracklist.css';
-import trackImage from './images/track.png';
-import deleteIcon from './images/delete.png';
-import editIcon from './images/edit.png';
-import lyricsIcon from './images/lyrics.png';
-import explicitIcon from './images/explicit.png';
 
 const TrackList = props => {
   const { tracks, loading } = props;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import getTracks from './api/beatroot-api';
-import TrackList from './components/TrackList';
 import Header from './components/Header';
+import TrackList from './components/TrackList';
+import AudioPlayer from './components/AudioPlayer';
 import './components/css/beatroot.css';
 
 const Beatroot = () => {
@@ -45,6 +46,7 @@ const Beatroot = () => {
         tracks={tracks}
         loading={loading}
       />
+      <AudioPlayer />
     </main>
   );
 };

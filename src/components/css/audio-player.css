@@ -1,0 +1,34 @@
+.audio-container {
+  position: fixed;
+  background: white;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  bottom: 0;
+  align-self: center;
+  overflow: hidden;
+}
+
+audio {
+  padding: 1px;
+  outline-color: red;
+}
+
+.audio-display {
+  overflow: hidden;
+  background: orangered;
+}
+
+.audio-display-text {
+  color: black;
+  position: relative;
+  animation: slideshow 6s linear infinite;
+}
+
+@keyframes slideshow {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 110%;
+  }
+}
