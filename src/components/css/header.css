@@ -63,9 +63,12 @@
 }
 
 .disabled:hover .arrow-forward,
-.arrow-forward,
-.arrow-forward:hover {
+.arrow-forward {
   transform: rotate(180deg);
+}
+
+.arrow-forward:hover {
+  transform: scale(1.2) rotate(180deg);
 }
 
 .header-page-number {

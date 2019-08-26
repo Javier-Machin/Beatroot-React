@@ -47,9 +47,6 @@
   justify-self: flex-end;
 }
 
-.track-lyrics {
-}
-
 .track-icons-container {
   grid-area: c;
 }
