@@ -18,6 +18,8 @@
   grid-auto-rows: 0;
   box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  position: relative;
+  animation: dive-in 0.8s ease-out;
 }
 
 .track-image {
@@ -106,4 +108,13 @@
 .loading {
   color: white;
   font-size: 30px;
+}
+
+@keyframes dive-in {
+  0% {
+    left: 150%;
+  }
+  100% {
+    left: 0%;
+  }
 }
