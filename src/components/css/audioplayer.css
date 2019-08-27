@@ -6,14 +6,17 @@
   bottom: 0;
   align-self: center;
   overflow: hidden;
+  width: 300px;
 }
 
 audio {
   padding: 1px;
   outline-color: red;
+  align-self: center;
 }
 
 .audio-display {
+  white-space: nowrap;
   overflow: hidden;
   background: orangered;
 }
@@ -21,14 +24,14 @@ audio {
 .audio-display-text {
   color: black;
   position: relative;
-  animation: scroll 6s linear infinite;
+  animation: scroll 7s linear infinite;
 }
 
 @keyframes scroll {
   0% {
-    left: -100%;
+    left: -130%;
   }
   100% {
-    left: 110%;
+    left: 120%;
   }
 }

@@ -3,12 +3,14 @@ import getTracks from './api/beatroot-api';
 import Header from './components/Header';
 import TrackList from './components/TrackList';
 import AudioPlayer from './components/AudioPlayer';
+import ModalWindow from './components/ModalWindow';
 import './components/css/beatroot.css';
 
 const Beatroot = () => {
   const [paginationData, setPaginationData] = useState({});
   const [tracksPerPage, setTracksPerPage] = useState(10);
   const [selectedTrack, setSelectedTrack] = useState({});
+  const [shouldPlay, setShouldPlay] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
@@ -44,12 +46,18 @@ const Beatroot = () => {
         loading={loading}
       />
       <main className="main-content">
+        <ModalWindow track={selectedTrack} />
         <TrackList
           tracks={tracks}
           loading={loading}
           setSelectedTrack={setSelectedTrack}
+          setShouldPlay={setShouldPlay}
         />
-        <AudioPlayer track={selectedTrack} />
+        <AudioPlayer
+          track={selectedTrack}
+          shouldPlay={shouldPlay}
+          setShouldPlay={setShouldPlay}
+        />
       </main>
     </div>
   );

@@ -9,12 +9,15 @@ import play from '../assets/play.png';
 import './css/tracklist.css';
 
 const TrackList = props => {
-  const { tracks, loading, setSelectedTrack } = props;
+  const { tracks, loading, setSelectedTrack, setShouldPlay } = props;
 
   const handleTrackOnClick = (event) => {
     const clickedTrackId = Number(event.target.name);
     const clickedTrack = tracks.find((track) => track.id === clickedTrackId);
-    if (clickedTrack) setSelectedTrack(clickedTrack);
+    if (clickedTrack) {
+      setSelectedTrack(clickedTrack);
+      setShouldPlay(true);
+    }
   };
 
   return (
@@ -110,7 +113,8 @@ const TrackList = props => {
 TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
-  setSelectedTrack: PropTypes.func.isRequired
+  setSelectedTrack: PropTypes.func.isRequired,
+  setShouldPlay: PropTypes.func.isRequired
 };
 
 export default TrackList;

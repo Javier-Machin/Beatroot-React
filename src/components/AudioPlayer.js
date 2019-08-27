@@ -2,22 +2,25 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 import song from '../assets/fearless-tule.mp3';
-import './css/audio-player.css';
+import './css/audioplayer.css';
 
 const AudioPlayer = (props) => {
   const [playing, setPlaying] = useState(false);
-  const { track = {} } = props;
+  const { track = {}, shouldPlay, setShouldPlay } = props;
   const { title = '- Welcome to Beatroot Lite', artist = {} } = track;
   const { name = '' } = artist;
 
   const playerRef = React.createRef();
 
-  // When a song is provided, start from 0 seconds
+  // When a song with shouldPlay is provided, start from 0 seconds
 
   useEffect(() => {
-    playerRef.current.seekTo(0);
-    if (name) setPlaying(true);
-  }, [title, name, playerRef]);
+    if (shouldPlay) {
+      playerRef.current.seekTo(0);
+      setPlaying(true);
+      setShouldPlay(false);
+    }
+  }, [playerRef, shouldPlay, setShouldPlay]);
 
   return (
     <div className="audio-container">
@@ -38,7 +41,9 @@ const AudioPlayer = (props) => {
 };
 
 AudioPlayer.propTypes = {
-  track: PropTypes.object.isRequired
+  track: PropTypes.object.isRequired,
+  setShouldPlay: PropTypes.func.isRequired,
+  shouldPlay: PropTypes.bool.isRequired
 };
 
 export default AudioPlayer;
