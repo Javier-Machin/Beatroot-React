@@ -12,6 +12,7 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
       `tracks?page=${page}&per_page=${tracksPerPage}`
     );
     const tracks = response.data.tracks.map(track => ({
+      id: track.id,
       title: track.title,
       artist: track.artist,
       explicit: track.explicit,

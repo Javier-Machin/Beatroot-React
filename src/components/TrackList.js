@@ -5,24 +5,50 @@ import deleteIcon from '../assets/delete.png';
 import editIcon from '../assets/edit.png';
 import lyricsIcon from '../assets/lyrics.png';
 import explicitIcon from '../assets/explicit.png';
+import play from '../assets/play.png';
 import './css/tracklist.css';
 
 const TrackList = props => {
-  const { tracks, loading } = props;
+  const { tracks, loading, setSelectedTrack } = props;
+
+  const handleTrackOnClick = (event) => {
+    const clickedTrackId = Number(event.target.name);
+    const clickedTrack = tracks.find((track) => track.id === clickedTrackId);
+    if (clickedTrack) setSelectedTrack(clickedTrack);
+  };
 
   return (
     <section className="tracklist-container">
       {!loading ? tracks.map((track, index) => {
         const { title, artist, explicit = true, isrc, lyrics = 'some lyrics' } = track;
+
         const testId = `track-${index + 1}`;
         const uniqueKey = Date.now() + Math.random() + index;
+
         return (
           <div
             className="track-container"
             data-testid={testId}
             key={uniqueKey}
           >
-            <img className="track-image" alt="track cover art" src={trackImage} />
+            <button
+              className="track-image-button"
+              type="button"
+              onClick={handleTrackOnClick}
+            >
+              <img
+                name={track.id}
+                className="track-image"
+                alt="track cover art"
+                src={trackImage}
+              />
+              <img
+                name={track.id}
+                className="track-play-img"
+                alt="track play button"
+                src={play}
+              />
+            </button>
             <div className="track-title-container">
               <p className="track-title">{title}</p>
               <p className="track-artist">{artist.name}</p>
@@ -83,7 +109,8 @@ const TrackList = props => {
 
 TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  setSelectedTrack: PropTypes.func.isRequired
 };
 
 export default TrackList;

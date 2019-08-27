@@ -4,6 +4,7 @@ const getTracksMockData = (numOfTracks = 5) => {
   const tracks = [];
   for (let i = 0; i < numOfTracks; i++) {
     tracks.push({
+      id: i + 1,
       title: `test track-${i + 1}`,
       artist: `test artist-${i + 1}`,
       explicit: true,

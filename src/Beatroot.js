@@ -8,6 +8,7 @@ import './components/css/beatroot.css';
 const Beatroot = () => {
   const [paginationData, setPaginationData] = useState({});
   const [tracksPerPage, setTracksPerPage] = useState(10);
+  const [selectedTrack, setSelectedTrack] = useState({});
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
@@ -33,7 +34,7 @@ const Beatroot = () => {
   }, [page, tracksPerPage]);
 
   return (
-    <main className="main-container">
+    <div className="app-container">
       <Header
         page={page}
         setPage={setPage}
@@ -42,12 +43,15 @@ const Beatroot = () => {
         paginationData={paginationData}
         loading={loading}
       />
-      <TrackList
-        tracks={tracks}
-        loading={loading}
-      />
-      <AudioPlayer />
-    </main>
+      <main className="main-content">
+        <TrackList
+          tracks={tracks}
+          loading={loading}
+          setSelectedTrack={setSelectedTrack}
+        />
+        <AudioPlayer track={selectedTrack} />
+      </main>
+    </div>
   );
 };
 
