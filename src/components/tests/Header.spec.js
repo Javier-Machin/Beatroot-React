@@ -10,7 +10,7 @@ import { getTracksMockData, getPaginationMockData } from '../../../__mocks__/tra
 /** Nock initialization to intercept api requests */
 
 const scope = nock(
-  'http://localhost:8080/https://sync-api.beatroot.com/accounts/beatroot-records'
+  'https://sync-api.beatroot.com/accounts/beatroot-records'
 );
 
 beforeEach(() => {
