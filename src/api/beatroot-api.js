@@ -41,4 +41,13 @@ const getArtist = async (artistName) => {
   }
 };
 
-export { getTracks as default, getArtist };
+const createTrack = async (newTrack) => {
+  try {
+    const response = await beatrootApi.post('tracks', { track: newTrack });
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export { getTracks as default, getArtist, createTrack };

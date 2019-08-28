@@ -50,7 +50,6 @@ const Beatroot = () => {
         <ModalWindow
           withOpenButton
           openButtonText="Add New Track"
-          tracks={tracks}
         >
           <TrackForm />
         </ModalWindow>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import closeIcon from '../assets/delete.png';
@@ -10,7 +10,6 @@ const ModalWindow = (props) => {
   const {
     withOpenButton,
     openButtonText,
-    tracks,
     children
   } = props;
 
@@ -18,12 +17,11 @@ const ModalWindow = (props) => {
     setModalIsOpen(!modalIsOpen);
   };
 
-  // Any change on tracks will close the modal, meaning a new track has been created or edited
-  // useEffect(() => {
-  //   if (modalIsOpen) {
-  //     setModalIsOpen(false);
-  //   }
-  // }, [tracks]);
+  // Pass state of modal and ability to change it to modal children
+  const childrenWithProps = React.Children.map(
+    children,
+    child => React.cloneElement(child, { modalIsOpen, setModalIsOpen })
+  );
 
   return (
     <section className="modal-container">
@@ -52,7 +50,7 @@ const ModalWindow = (props) => {
             src={closeIcon}
           />
         </button>
-        {children}
+        {childrenWithProps}
       </ReactModal>
     </section>
   );

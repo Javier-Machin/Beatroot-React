@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getArtist } from '../api/beatroot-api';
+import { getArtist, createTrack } from '../api/beatroot-api';
 import './css/trackform.css';
 
 class TrackForm extends React.Component {
@@ -19,10 +19,23 @@ class TrackForm extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     const { id, title, artist, explicit, isrc, lyrics } = this.state;
+    const { setModalIsOpen } = this.props;
     if (!id && title && artist) {
       const artistNameQuery = artist.replace(' ', '+');
-      const artistId = await getArtist(artistNameQuery);
-      console.log(artistId);
+      const foundArtist = await getArtist(artistNameQuery);
+
+      if (foundArtist) {
+        const newTrack = {
+          title,
+          artist_id: foundArtist.id,
+          explicit,
+          isrc,
+          lyrics
+        };
+
+        await createTrack(newTrack);
+        setModalIsOpen(false);
+      }
     }
   }
 
@@ -92,7 +105,8 @@ class TrackForm extends React.Component {
 
 
 TrackForm.propTypes = {
-  track: PropTypes.object
+  track: PropTypes.object,
+  setModalIsOpen: PropTypes.func.isRequired
 };
 
 TrackForm.defaultProps = {
