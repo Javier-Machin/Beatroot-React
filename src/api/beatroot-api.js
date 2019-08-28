@@ -28,4 +28,17 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
   }
 };
 
-export { getTracks as default };
+const getArtist = async (artistName) => {
+  try {
+    const response = await beatrootApi.get(
+      `artists?filters[text]=${artistName}`
+    );
+
+    const artist = response.data.artists[0];
+    return artist;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export { getTracks as default, getArtist };

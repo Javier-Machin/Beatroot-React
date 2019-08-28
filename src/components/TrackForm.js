@@ -1,33 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getArtist } from '../api/beatroot-api';
 import './css/trackform.css';
 
 class TrackForm extends React.Component {
   constructor(props) {
     super(props);
     const { track } = props;
-    this.state = { ...track };
+    this.state = { ...track, artist: track.artist.name };
     this.handleTextOnChange = this.handleTextOnChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleTextOnChange({ target }) {
     this.setState({ [target.name]: target.value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
+    const { id, title, artist, explicit, isrc, lyrics } = this.state;
+    if (!id && title && artist) {
+      const artistNameQuery = artist.replace(' ', '+');
+      const artistId = await getArtist(artistNameQuery);
+      console.log(artistId);
+    }
   }
 
   render() {
     const {
       title = '',
-      artist = {},
+      artist = '',
       explicit = false,
       isrc = '',
       lyrics = ''
     } = this.state;
-    const { name = '' } = artist;
 
     return (
       <form className="track-form">
@@ -38,14 +44,16 @@ class TrackForm extends React.Component {
           onChange={this.handleTextOnChange}
           value={title}
           placeholder="Song title"
+          required
         />
         <input
           type="text"
-          className="text-input name-input"
-          name="name"
+          className="text-input artist-input"
+          name="artist"
           onChange={this.handleTextOnChange}
-          value={name}
+          value={artist}
           placeholder="Artist name"
+          required
         />
         <input
           type="text"
