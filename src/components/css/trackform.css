@@ -1,3 +1,91 @@
 .track-form {
-  background-color: grey;
+  margin: 0 auto;
+  background-color: var(--main-color);
+  border-radius: 5px;
+  min-height: 500px;
+  max-width: 500px;
+  min-width: 210px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.track-form input {
+  outline: none;
+}
+
+.track-form input:focus,
+.lyrics-input:focus {
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.text-input {
+  margin-top: 1rem;
+  height: 20px;
+  min-width: 200px;
+  border: none;
+  border-radius: 5px;
+  align-self: center;
+  padding: 10px;
+}
+
+.lyrics-input {
+  min-height: 250px;
+  min-width: 200px;
+  align-self: center;
+  border-radius: 5px;
+  resize: none;
+  margin-top: 1rem;
+  outline: none;
+  padding: 10px;
+}
+
+.explicit-input-container {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  align-self: center;
+}
+
+.explicit-input-container label {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.explicit-input {
+  width: 20px;
+  height: 20px;
+  background: white;
+  cursor: pointer;
+}
+
+.track-form-submit {
+  font-family: 'Play', sans-serif;
+  position: relative;
+  margin-top: 1rem;
+  bottom: 0;
+  align-self: center;
+  background-color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s;
+  outline: none;
+  cursor: pointer;
+}
+
+.track-form-submit:hover,
+.track-form-submit:focus {
+  transform: translate(0, -2px);
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.track-form-submit:active {
+  transform: translate(0, 0px);
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.6);
 }

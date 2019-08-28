@@ -21,6 +21,13 @@
   cursor: pointer;
 }
 
+.modal-close-button {
+  float: right;
+  border: none;
+  background: transparent;
+  outline-color: var(--main-color);
+}
+
 .modal-open-button:hover,
 .modal-open-button:focus {
   transform: translate(0, -2px);

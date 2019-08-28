@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import getTracks from './api/beatroot-api';
 import Header from './components/Header';
 import TrackList from './components/TrackList';
+import TrackForm from './components/TrackForm';
 import AudioPlayer from './components/AudioPlayer';
 import ModalWindow from './components/ModalWindow';
 import './components/css/beatroot.css';
@@ -46,17 +47,23 @@ const Beatroot = () => {
         loading={loading}
       />
       <main className="main-content">
-        <ModalWindow track={selectedTrack} />
+        <ModalWindow
+          withOpenButton
+          openButtonText="Add New Track"
+          tracks={tracks}
+        >
+          <TrackForm />
+        </ModalWindow>
         <TrackList
           tracks={tracks}
-          loading={loading}
-          setSelectedTrack={setSelectedTrack}
           setShouldPlay={setShouldPlay}
+          setSelectedTrack={setSelectedTrack}
+          loading={loading}
         />
         <AudioPlayer
           track={selectedTrack}
-          shouldPlay={shouldPlay}
           setShouldPlay={setShouldPlay}
+          shouldPlay={shouldPlay}
         />
       </main>
     </div>

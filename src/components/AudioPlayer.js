@@ -25,7 +25,9 @@ const AudioPlayer = (props) => {
   return (
     <div className="audio-container">
       <div className="audio-display">
-        <span className="audio-display-text">{`${title} - ${name}`}</span>
+        <span className="audio-display-text">
+          {`${title} - ${name}`}
+        </span>
       </div>
       <ReactPlayer
         ref={playerRef}
