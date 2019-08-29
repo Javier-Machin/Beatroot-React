@@ -57,7 +57,6 @@ const ModalWindow = (props) => {
 };
 
 ModalWindow.propTypes = {
-  tracks: PropTypes.array.isRequired,
   withOpenButton: PropTypes.bool,
   openButtonText: PropTypes.string,
   children: PropTypes.object.isRequired

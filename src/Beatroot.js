@@ -55,6 +55,9 @@ const Beatroot = () => {
         </ModalWindow>
         <TrackList
           tracks={tracks}
+          setTracks={setTracks}
+          page={page}
+          tracksPerPage={tracksPerPage}
           setShouldPlay={setShouldPlay}
           setSelectedTrack={setSelectedTrack}
           loading={loading}

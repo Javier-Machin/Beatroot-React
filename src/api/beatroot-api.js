@@ -15,9 +15,7 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
       id: track.id,
       title: track.title,
       artist: track.artist,
-      explicit: track.explicit,
-      isrc: track.isrc,
-      lyrics: track.lyrics
+      isrc: track.isrc
     }));
 
     const paginationData = response.data.meta.pagination;
@@ -50,4 +48,13 @@ const createTrack = async (newTrack) => {
   }
 };
 
-export { getTracks as default, getArtist, createTrack };
+const deleteTrack = async (trackId) => {
+  try {
+    const response = await beatrootApi.delete(`tracks/${trackId}`);
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export { getTracks as default, getArtist, createTrack, deleteTrack };

@@ -1,17 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import getTracks, { deleteTrack } from '../api/beatroot-api';
 import trackImage from '../assets/track.png';
 import deleteIcon from '../assets/delete.png';
 import editIcon from '../assets/edit.png';
 import lyricsIcon from '../assets/lyrics.png';
-import explicitIcon from '../assets/explicit.png';
 import play from '../assets/play.png';
 import './css/tracklist.css';
 
 const TrackList = props => {
-  const { tracks, loading, setSelectedTrack, setShouldPlay } = props;
+  const {
+    tracks,
+    loading,
+    setSelectedTrack,
+    setShouldPlay,
+    setTracks,
+    page,
+    tracksPerPage
+  } = props;
 
-  const handleTrackOnClick = (event) => {
+  const handleTrackPlay = (event) => {
     const clickedTrackId = Number(event.target.name);
     const clickedTrack = tracks.find((track) => track.id === clickedTrackId);
     if (clickedTrack) {
@@ -20,10 +28,19 @@ const TrackList = props => {
     }
   };
 
+  const handleDeleteTrack = async (event) => {
+    const clickedTrackId = event.target.name;
+    const response = await deleteTrack(clickedTrackId);
+    if (response.status === 204) {
+      const updatedTracks = await getTracks(page, tracksPerPage);
+      setTracks(updatedTracks.tracks);
+    }
+  };
+
   return (
     <section className="tracklist-container">
       {!loading ? tracks.map((track, index) => {
-        const { title, artist, explicit = true, isrc, lyrics = 'some lyrics' } = track;
+        const { id, title, artist, isrc } = track;
 
         const testId = `track-${index + 1}`;
         const uniqueKey = Date.now() + Math.random() + index;
@@ -37,16 +54,16 @@ const TrackList = props => {
             <button
               className="track-image-button"
               type="button"
-              onClick={handleTrackOnClick}
+              onClick={handleTrackPlay}
             >
               <img
-                name={track.id}
+                name={id}
                 className="track-image"
                 alt="track cover art"
                 src={trackImage}
               />
               <img
-                name={track.id}
+                name={id}
                 className="track-play-img"
                 alt="track play button"
                 src={play}
@@ -58,11 +75,12 @@ const TrackList = props => {
             </div>
             <div className="track-icons-container">
               <button
-                name="delete"
+                name={id}
                 type="button"
+                onClick={handleDeleteTrack}
               >
                 <img
-                  name="img-delete"
+                  name={id}
                   className="icon icon-delete"
                   alt="icon to delete"
                   src={deleteIcon}
@@ -79,26 +97,17 @@ const TrackList = props => {
                   src={editIcon}
                 />
               </button>
-              {!!lyrics && (
-                <button
-                  name="lyrics"
-                  type="button"
-                >
-                  <img
-                    name="img-lyrics"
-                    className="icon icon-lyrics"
-                    alt="icon to lyrics"
-                    src={lyricsIcon}
-                  />
-                </button>
-              )}
-              {!!explicit && (
+              <button
+                name="lyrics"
+                type="button"
+              >
                 <img
-                  className="icon icon-explicit"
-                  alt="18 plus icon"
-                  src={explicitIcon}
+                  name="img-lyrics"
+                  className="icon icon-lyrics"
+                  alt="icon to lyrics"
+                  src={lyricsIcon}
                 />
-              )}
+              </button>
             </div>
             <p className="track-isrc">{isrc}</p>
           </div>
@@ -114,7 +123,10 @@ TrackList.propTypes = {
   tracks: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   setSelectedTrack: PropTypes.func.isRequired,
-  setShouldPlay: PropTypes.func.isRequired
+  setTracks: PropTypes.func.isRequired,
+  setShouldPlay: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  tracksPerPage: PropTypes.number.isRequired
 };
 
 export default TrackList;

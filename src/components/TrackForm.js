@@ -97,7 +97,13 @@ class TrackForm extends React.Component {
           value={lyrics}
           placeholder="Lyrics"
         />
-        <button className="track-form-submit" type="submit" onClick={this.handleSubmit}> Submit </button>
+        <button
+          className="track-form-submit"
+          type="submit"
+          onClick={this.handleSubmit}
+        >
+          Submit
+        </button>
       </form>
     );
   }
@@ -106,7 +112,7 @@ class TrackForm extends React.Component {
 
 TrackForm.propTypes = {
   track: PropTypes.object,
-  setModalIsOpen: PropTypes.func.isRequired
+  setModalIsOpen: PropTypes.func
 };
 
 TrackForm.defaultProps = {
@@ -116,7 +122,8 @@ TrackForm.defaultProps = {
     explicit: false,
     isrc: '',
     lyrics: ''
-  }
+  },
+  setModalIsOpen: Function.prototype
 };
 
 export default TrackForm;
