@@ -80,7 +80,7 @@ const updateTrack = async (updatedTrack) => {
 };
 
 export {
-  getTracks as default,
+  getTracks,
   getTrack,
   getArtist,
   createTrack,

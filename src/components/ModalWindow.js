@@ -32,7 +32,10 @@ const ModalWindow = (props) => {
   );
 
   return (
-    <section className="modal-container">
+    <section
+      className="modal-container"
+      data-testid="react-modal"
+    >
       {withOpenButton && (
         <button
           className="modal-open-button"

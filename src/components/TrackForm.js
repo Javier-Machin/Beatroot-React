@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getTracks, { getArtist, createTrack, updateTrack } from '../api/beatroot-api';
+import { getTracks, getArtist, createTrack, updateTrack } from '../api/beatroot-api';
 import './css/trackform.css';
 
 class TrackForm extends React.Component {
@@ -54,6 +54,8 @@ class TrackForm extends React.Component {
         updateTrackList(response);
         setModalIsOpen(false);
       } else {
+        // I would handle it better but already way beyond the scope of the exercise
+        // eslint-disable-next-line no-alert
         alert('Artist not found, try a different one');
       }
       // If we have id we are editing
@@ -77,6 +79,8 @@ class TrackForm extends React.Component {
         updateTrackList(response);
         setEditTrackModalOpen(false);
       } else {
+        // I would handle it better but already way beyond the scope of the exercise
+        // eslint-disable-next-line no-alert
         alert('Artist not found, try a different one');
       }
     }
@@ -92,9 +96,10 @@ class TrackForm extends React.Component {
     } = this.state;
 
     return (
-      <form className="track-form">
+      <form data-testid="track-form" className="track-form">
         <input
           type="text"
+          data-testid="title-input"
           className="text-input title-input"
           name="title"
           onChange={this.handleTextOnChange}

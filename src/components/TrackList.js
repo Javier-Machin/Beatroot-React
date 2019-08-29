@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import getTracks, { deleteTrack, getTrack } from '../api/beatroot-api';
+import { getTracks, deleteTrack, getTrack } from '../api/beatroot-api';
 import ModalWindow from './ModalWindow';
 import TrackForm from './TrackForm';
 import Lyrics from './Lyrics';
@@ -92,6 +92,7 @@ const TrackList = props => {
                 />
                 <img
                   name={id}
+                  data-testid={`track-play-${index + 1}`}
                   className="track-play-img"
                   alt="track play button"
                   src={play}

@@ -16,6 +16,7 @@ const Lyrics = (props) => {
       <h3>{artist}</h3>
       <textarea
         className="lyrics-textarea"
+        data-testid="lyrics-textarea"
         readOnly
         value={selectedLyrics}
       />

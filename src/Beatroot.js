@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import getTracks from './api/beatroot-api';
+import { getTracks } from './api/beatroot-api';
 import Header from './components/Header';
 import TrackList from './components/TrackList';
 import TrackForm from './components/TrackForm';
