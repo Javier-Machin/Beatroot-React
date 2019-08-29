@@ -1,9 +1,10 @@
 import Axios from 'axios';
 
 const beatrootApi = Axios.create({
-  baseURL:
-    'https://sync-api.beatroot.com/accounts/beatroot-records/',
-  headers: { Authorization: 'Token c1ff5138-2be8-4042-8c6d-6984586fc8bd' }
+  baseURL: 'https://sync-api.beatroot.com/accounts/beatroot-records/',
+  headers: {
+    Authorization: 'Token c1ff5138-2be8-4042-8c6d-6984586fc8bd'
+  }
 });
 
 const getTracks = async (page = 1, tracksPerPage = 10) => {
@@ -21,6 +22,18 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
     const paginationData = response.data.meta.pagination;
 
     return { tracks, paginationData };
+  } catch (error) {
+    return { error };
+  }
+};
+
+const getTrack = async (trackId) => {
+  try {
+    const response = await beatrootApi.get(`tracks/${trackId}`);
+    const { data } = response;
+    const { track } = data;
+
+    return track;
   } catch (error) {
     return { error };
   }
@@ -57,4 +70,20 @@ const deleteTrack = async (trackId) => {
   }
 };
 
-export { getTracks as default, getArtist, createTrack, deleteTrack };
+const updateTrack = async (updatedTrack) => {
+  try {
+    const response = await beatrootApi.patch(`tracks/${updatedTrack.id}`, { track: updatedTrack });
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export {
+  getTracks as default,
+  getTrack,
+  getArtist,
+  createTrack,
+  deleteTrack,
+  updateTrack
+};

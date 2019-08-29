@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getArtist, createTrack } from '../api/beatroot-api';
+import getTracks, { getArtist, createTrack, updateTrack } from '../api/beatroot-api';
 import './css/trackform.css';
 
 class TrackForm extends React.Component {
@@ -9,6 +9,7 @@ class TrackForm extends React.Component {
     const { track } = props;
     this.state = { ...track, artist: track.artist.name };
     this.handleTextOnChange = this.handleTextOnChange.bind(this);
+    this.handleExplicitOnChange = this.handleExplicitOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -16,11 +17,26 @@ class TrackForm extends React.Component {
     this.setState({ [target.name]: target.value });
   }
 
+  handleExplicitOnChange() {
+    const { explicit } = this.state;
+    this.setState({ explicit: !explicit });
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     const { id, title, artist, explicit, isrc, lyrics } = this.state;
-    const { setModalIsOpen } = this.props;
+    const {
+      setModalIsOpen,
+      updateTrackList,
+      setEditTrackModalOpen,
+      page,
+      tracksPerPage,
+      setLoading
+    } = this.props;
+
+    // If we don't have id we are creating a new track
     if (!id && title && artist) {
+      setLoading(true);
       const artistNameQuery = artist.replace(' ', '+');
       const foundArtist = await getArtist(artistNameQuery);
 
@@ -34,7 +50,34 @@ class TrackForm extends React.Component {
         };
 
         await createTrack(newTrack);
+        const response = await getTracks(page, tracksPerPage);
+        updateTrackList(response);
         setModalIsOpen(false);
+      } else {
+        alert('Artist not found, try a different one');
+      }
+      // If we have id we are editing
+    } else if (id && title && artist) {
+      setLoading(true);
+      const artistNameQuery = artist.replace(' ', '+');
+      const foundArtist = await getArtist(artistNameQuery);
+
+      if (foundArtist) {
+        const updatedTrack = {
+          id,
+          title,
+          artist_id: foundArtist.id,
+          explicit,
+          isrc,
+          lyrics
+        };
+
+        await updateTrack(updatedTrack);
+        const response = await getTracks(page, tracksPerPage);
+        updateTrackList(response);
+        setEditTrackModalOpen(false);
+      } else {
+        alert('Artist not found, try a different one');
       }
     }
   }
@@ -44,8 +87,8 @@ class TrackForm extends React.Component {
       title = '',
       artist = '',
       explicit = false,
-      isrc = '',
-      lyrics = ''
+      lyrics = '',
+      isrc = ''
     } = this.state;
 
     return (
@@ -55,7 +98,7 @@ class TrackForm extends React.Component {
           className="text-input title-input"
           name="title"
           onChange={this.handleTextOnChange}
-          value={title}
+          value={String(title)}
           placeholder="Song title"
           required
         />
@@ -64,7 +107,7 @@ class TrackForm extends React.Component {
           className="text-input artist-input"
           name="artist"
           onChange={this.handleTextOnChange}
-          value={artist}
+          value={String(artist)}
           placeholder="Artist name"
           required
         />
@@ -73,19 +116,20 @@ class TrackForm extends React.Component {
           className="text-input isrc-input"
           name="isrc"
           onChange={this.handleTextOnChange}
-          value={isrc}
+          value={String(isrc)}
           placeholder="ISRC"
         />
         <div className="explicit-input-container">
           <label htmlFor="explicit-checkbox">
             Explicit Song
             <input
+              checked={explicit}
               type="checkbox"
               className="explicit-input"
               name="explicit"
               id="explicit-checkbox"
-              onChange={Function.prototype}
-              value={explicit}
+              onChange={this.handleExplicitOnChange}
+              value={!!explicit}
             />
           </label>
         </div>
@@ -94,7 +138,7 @@ class TrackForm extends React.Component {
           className="lyrics-input"
           name="lyrics"
           onChange={this.handleTextOnChange}
-          value={lyrics}
+          value={String(lyrics)}
           placeholder="Lyrics"
         />
         <button
@@ -112,7 +156,15 @@ class TrackForm extends React.Component {
 
 TrackForm.propTypes = {
   track: PropTypes.object,
-  setModalIsOpen: PropTypes.func
+  setModalIsOpen: PropTypes.func,
+  updateTrackList: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired,
+  setEditTrackModalOpen: PropTypes.func,
+  tracksPerPage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  page: PropTypes.number.isRequired
 };
 
 TrackForm.defaultProps = {
@@ -123,7 +175,8 @@ TrackForm.defaultProps = {
     isrc: '',
     lyrics: ''
   },
-  setModalIsOpen: Function.prototype
+  setModalIsOpen: Function.prototype,
+  setEditTrackModalOpen: Function.prototype
 };
 
 export default TrackForm;

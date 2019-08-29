@@ -5,15 +5,23 @@ import closeIcon from '../assets/delete.png';
 import './css/modal.css';
 
 const ModalWindow = (props) => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
-
   const {
     withOpenButton,
     openButtonText,
-    children
+    children,
+    isOpen,
+    setIsOpen
   } = props;
 
+  const [modalIsOpen, setModalIsOpen] = useState(isOpen);
+
+
   const handleModalOpen = () => {
+    // If state handler provided from outside use that one
+    if (setIsOpen) {
+      setIsOpen(!modalIsOpen);
+      return;
+    }
     setModalIsOpen(!modalIsOpen);
   };
 
@@ -59,12 +67,16 @@ const ModalWindow = (props) => {
 ModalWindow.propTypes = {
   withOpenButton: PropTypes.bool,
   openButtonText: PropTypes.string,
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func
 };
 
 ModalWindow.defaultProps = {
   withOpenButton: false,
-  openButtonText: ''
+  openButtonText: '',
+  isOpen: false,
+  setIsOpen: undefined
 };
 
 export default ModalWindow;

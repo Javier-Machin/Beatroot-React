@@ -10,11 +10,18 @@ import './components/css/beatroot.css';
 const Beatroot = () => {
   const [paginationData, setPaginationData] = useState({});
   const [tracksPerPage, setTracksPerPage] = useState(10);
-  const [selectedTrack, setSelectedTrack] = useState({});
+  const [selectedTrackToPlay, setSelectedTrackToPlay] = useState({});
   const [shouldPlay, setShouldPlay] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
+
+
+  const updateTrackList = (response) => {
+    setTracks(response.tracks);
+    setPaginationData(response.paginationData);
+    setLoading(false);
+  };
 
   /**
    * Fetch tracks on mount and pagination changes
@@ -22,14 +29,10 @@ const Beatroot = () => {
    */
 
   useEffect(() => {
-    setLoading(true);
     let stopRequest = false;
-    getTracks(page, tracksPerPage).then(response => {
-      if (!stopRequest) {
-        setTracks(response.tracks);
-        setPaginationData(response.paginationData);
-        setLoading(false);
-      }
+    setLoading(true);
+    getTracks(page, tracksPerPage).then((response) => {
+      if (!stopRequest) updateTrackList(response);
     });
     return () => {
       stopRequest = true;
@@ -51,19 +54,25 @@ const Beatroot = () => {
           withOpenButton
           openButtonText="Add New Track"
         >
-          <TrackForm />
+          <TrackForm
+            updateTrackList={updateTrackList}
+            page={page}
+            tracksPerPage={tracksPerPage}
+            setLoading={setLoading}
+          />
         </ModalWindow>
         <TrackList
           tracks={tracks}
-          setTracks={setTracks}
-          page={page}
+          updateTrackList={updateTrackList}
           tracksPerPage={tracksPerPage}
+          page={page}
           setShouldPlay={setShouldPlay}
-          setSelectedTrack={setSelectedTrack}
+          setSelectedTrackToPlay={setSelectedTrackToPlay}
           loading={loading}
+          setLoading={setLoading}
         />
         <AudioPlayer
-          track={selectedTrack}
+          track={selectedTrackToPlay}
           setShouldPlay={setShouldPlay}
           shouldPlay={shouldPlay}
         />

@@ -1,0 +1,27 @@
+.lyrics-container {
+  margin: 0 auto;
+  background-color: var(--main-color);
+  border-radius: 5px;
+  min-height: 500px;
+  max-width: 500px;
+  min-width: 210px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.lyrics-textarea {
+  min-height: 450px;
+  min-width: 300px;
+  align-self: center;
+  border-radius: 5px;
+  resize: none;
+  margin-top: 1rem;
+  outline: none;
+  padding: 10px;
+}
+
+.lyrics-container h3 {
+  color: white;
+  text-align: center;
+}
