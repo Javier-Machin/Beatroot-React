@@ -2,6 +2,7 @@
   "name": "beatroot-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://javier-machin.github.io/Beatroot-React",
   "dependencies": {
     "axios": "^0.19.0",
     "cross-env": "^5.2.0",

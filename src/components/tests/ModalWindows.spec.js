@@ -28,8 +28,8 @@ beforeEach(() => {
     );
 });
 
-describe('Lyrics component', () => {
-  test('Lyrics component renders correctly', async () => {
+describe('Modal component', () => {
+  test('Modal component renders correctly', async () => {
     const { getByTestId } = render(
       <ModalWindow withOpenButton isOpen>
         <AudioPlayer {...props} />
