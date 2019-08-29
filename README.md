@@ -2,6 +2,8 @@
 
 The following is a general rundown of the development of this app:
 
+`npm i`, `npm start` should get it up and running.
+
 It has a big focus on functional components, but still showcases one class based one `TrackForm.js`
 (We still have to support existing code after all).
 It also makes extensive use of react hooks.
