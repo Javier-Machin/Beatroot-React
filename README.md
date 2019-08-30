@@ -15,7 +15,9 @@ The testing framework is Jest + [react-testing-library](https://testing-library.
 **Check the file `src/components/tests/header.spec.js` for a step by step with comments on what it does,
 the rest of the tests are pretty basic due to time constraints**
 
-Biggest challenge I faced was the logic for the modal windows, I ended up having to create a customizable one that would accept state and state handlers provided as props, while having also having a self-contained state for other cases, that would pass down its own state and ability to change it to its children, it worked out ok in the end.
+Biggest challenge I faced was the logic for the modal windows, I ended up having to create a customizable one that would accept state and state handlers provided as props, while also having a self-contained state for other cases. 
+
+This modal also pass down its own state and the ability to change it to its children, in the end it worked out ok.
 
 **Quick Journal about development process:**
 
