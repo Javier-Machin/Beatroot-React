@@ -4,10 +4,10 @@ import ReactPlayer from 'react-player';
 import song from '../assets/fearless-tule.mp3';
 import './css/audioplayer.css';
 
-const AudioPlayer = (props) => {
+const AudioPlayer = props => {
   const [playing, setPlaying] = useState(false);
   const { track = {}, shouldPlay, setShouldPlay } = props;
-  const { title = '- Welcome to Beatroot Lite', artist = {} } = track;
+  const { title = '- Welcome to Music Beast Manager', artist = {} } = track;
   const { name = '' } = artist;
 
   const playerRef = React.createRef();
@@ -23,21 +23,18 @@ const AudioPlayer = (props) => {
   }, [playerRef, shouldPlay, setShouldPlay]);
 
   return (
-    <div className="audio-container">
-      <div className="audio-display">
-        <span
-          data-testid="audio-display-text"
-          className="audio-display-text"
-        >
+    <div className='audio-container'>
+      <div className='audio-display'>
+        <span data-testid='audio-display-text' className='audio-display-text'>
           {`${title} - ${name}`}
         </span>
       </div>
       <ReactPlayer
         ref={playerRef}
-        data-testid="audio-player"
-        className="audio-player"
-        width="300px"
-        height="50px"
+        data-testid='audio-player'
+        className='audio-player'
+        width='300px'
+        height='50px'
         url={song}
         controls
         playing={playing}

@@ -7,9 +7,7 @@ import nock from 'nock';
 import TrackForm from '../TrackForm';
 import { getTracksMockData, getPaginationMockData } from '../../../__mocks__/tracksData';
 
-const scope = nock(
-  'https://sync-api.beatroot.com/accounts/beatroot-records'
-);
+const scope = nock('http://localhost:3000/');
 
 const props = {
   updateTrackList: jest.fn(),
@@ -22,10 +20,7 @@ beforeEach(() => {
   scope
     .get('/tracks')
     .query({ page: 1, per_page: 10 })
-    .reply(
-      200,
-      { tracks: getTracksMockData(10), meta: getPaginationMockData() },
-    );
+    .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
 });
 
 describe('TrackForm component', () => {
@@ -38,7 +33,9 @@ describe('TrackForm component', () => {
   test('typing on input updates value', async () => {
     const { getByTestId } = render(<TrackForm {...props} />);
 
-    fireEvent.change(getByTestId('title-input'), { target: { name: 'title', value: 'a' } });
+    fireEvent.change(getByTestId('title-input'), {
+      target: { name: 'title', value: 'a' }
+    });
     await waitForElement(() => getByTestId('track-form'));
     expect(getByTestId('title-input').value).toBe('a');
   });

@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Beatroot from './Beatroot';
+import MusicBeast from './MusicBeast';
 
-ReactDOM.render(<Beatroot />, document.getElementById('root'));
+ReactDOM.render(<MusicBeast />, document.getElementById('root'));

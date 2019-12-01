@@ -4,35 +4,29 @@ import React from 'react';
 import { render, waitForElement, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import nock from 'nock';
-import Beatroot from '../../Beatroot';
+import MusicBeast from '../../MusicBeast';
 import { getTracksMockData, getPaginationMockData } from '../../../__mocks__/tracksData';
 
-const scope = nock(
-  'https://sync-api.beatroot.com/accounts/beatroot-records'
-);
+const scope = nock('http://localhost:3000/');
 
 window.HTMLMediaElement.prototype.play = () => {};
-
 
 beforeEach(() => {
   scope
     .get('/tracks')
     .query({ page: 1, per_page: 10 })
-    .reply(
-      200,
-      { tracks: getTracksMockData(10), meta: getPaginationMockData() },
-    );
+    .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
 });
 
 describe('Audio player component', () => {
   test('audio player renders correctly', async () => {
-    const { getByTestId } = render(<Beatroot />);
+    const { getByTestId } = render(<MusicBeast />);
 
     await waitForElement(() => getByTestId('audio-player'));
   });
 
-  test('clicking play on a track, shows it\'s title in the audio player', async () => {
-    const { getByTestId } = render(<Beatroot />);
+  test("clicking play on a track, shows it's title in the audio player", async () => {
+    const { getByTestId } = render(<MusicBeast />);
 
     await waitForElement(() => getByTestId('track-1'));
     fireEvent.click(getByTestId('track-play-1'));

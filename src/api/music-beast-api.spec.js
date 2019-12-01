@@ -2,25 +2,14 @@
 import nock from 'nock';
 import { getTracksMockData, getPaginationMockData } from '../../__mocks__/tracksData';
 import '@testing-library/jest-dom/extend-expect';
-import {
-  getTracks,
-  createTrack,
-  deleteTrack,
-  updateTrack
-} from './beatroot-api';
+import { getTracks, createTrack, deleteTrack, updateTrack } from './music-beast-api';
 
-const scope = nock(
-  'https://sync-api.beatroot.com/accounts/beatroot-records'
-);
+const scope = nock('http://localhost:3000/');
 
 scope
   .get('/tracks')
   .query({ page: 1, per_page: 10 })
-  .reply(
-    200,
-    { tracks: getTracksMockData(10), meta: getPaginationMockData() },
-  );
-
+  .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
 
 describe('API interaction functions', () => {
   describe('getTracks', () => {
@@ -28,10 +17,7 @@ describe('API interaction functions', () => {
       scope
         .get('/tracks')
         .query({ page: 1, per_page: 5 })
-        .reply(
-          200,
-          { tracks: getTracksMockData(5), meta: getPaginationMockData() },
-        );
+        .reply(200, { tracks: getTracksMockData(5), meta: getPaginationMockData() });
       const response = await getTracks(1, 5);
       expect(response).toMatchObject({
         paginationData: {
@@ -79,12 +65,7 @@ describe('API interaction functions', () => {
 
   describe('deleteTrack', () => {
     it('makes a delete request with the provided id', async () => {
-      scope
-        .delete('/tracks/3')
-        .reply(
-          204,
-          { data: { status: 204 } },
-        );
+      scope.delete('/tracks/3').reply(204, { data: { status: 204 } });
       const response = await deleteTrack(3);
       expect(response).toMatchObject({ status: 204 });
     });
@@ -92,16 +73,11 @@ describe('API interaction functions', () => {
 
   describe('updateTrack', () => {
     it('updates the specified track with the provided data', async () => {
-      scope
-        .patch('/tracks/3')
-        .reply(
-          200,
-          {
-            id: 3,
-            name: 'some song',
-            artist: 'some artist'
-          },
-        );
+      scope.patch('/tracks/3').reply(200, {
+        id: 3,
+        name: 'some song',
+        artist: 'some artist'
+      });
       const response = await updateTrack({
         id: 3,
         name: 'some song',
@@ -119,16 +95,11 @@ describe('API interaction functions', () => {
 
   describe('updateTrack', () => {
     it('makes a patch request with the specified data', async () => {
-      scope
-        .patch('/tracks/3')
-        .reply(
-          200,
-          {
-            id: 3,
-            name: 'some song',
-            artist: 'some artist'
-          },
-        );
+      scope.patch('/tracks/3').reply(200, {
+        id: 3,
+        name: 'some song',
+        artist: 'some artist'
+      });
       const response = await updateTrack({
         id: 3,
         name: 'some song',
@@ -146,19 +117,14 @@ describe('API interaction functions', () => {
 
   describe('createTrack', () => {
     it('makes a post request with the provided data', async () => {
-      scope
-        .post('/tracks')
-        .reply(
-          200,
-          {
-            id: Math.floor(Math.random()),
-            title: 'some title',
-            artist_id: 3,
-            explicit: false,
-            isrc: '1234',
-            lyrics: 'some lyrics'
-          },
-        );
+      scope.post('/tracks').reply(200, {
+        id: Math.floor(Math.random()),
+        title: 'some title',
+        artist_id: 3,
+        explicit: false,
+        isrc: '1234',
+        lyrics: 'some lyrics'
+      });
       const response = await createTrack({
         title: 'some title',
         artist_id: 3,

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getTracks } from './api/beatroot-api';
+import { getTracks } from './api/music-beast-api';
 import Header from './components/Header';
 import TrackList from './components/TrackList';
 import TrackForm from './components/TrackForm';
 import AudioPlayer from './components/AudioPlayer';
 import ModalWindow from './components/ModalWindow';
-import './components/css/beatroot.css';
+import './components/css/music-beast.css';
 
-const Beatroot = () => {
+const MusicBeast = () => {
   const [paginationData, setPaginationData] = useState({});
   const [tracksPerPage, setTracksPerPage] = useState(10);
   const [selectedTrackToPlay, setSelectedTrackToPlay] = useState({});
@@ -16,8 +16,7 @@ const Beatroot = () => {
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
 
-
-  const updateTrackList = (response) => {
+  const updateTrackList = response => {
     setTracks(response.tracks);
     setPaginationData(response.paginationData);
     setLoading(false);
@@ -31,7 +30,7 @@ const Beatroot = () => {
   useEffect(() => {
     let stopRequest = false;
     setLoading(true);
-    getTracks(page, tracksPerPage).then((response) => {
+    getTracks(page, tracksPerPage).then(response => {
       if (!stopRequest) updateTrackList(response);
     });
     return () => {
@@ -40,7 +39,7 @@ const Beatroot = () => {
   }, [page, tracksPerPage]);
 
   return (
-    <div className="app-container">
+    <div className='app-container'>
       <Header
         page={page}
         setPage={setPage}
@@ -49,11 +48,8 @@ const Beatroot = () => {
         paginationData={paginationData}
         loading={loading}
       />
-      <main className="main-content">
-        <ModalWindow
-          withOpenButton
-          openButtonText="Add New Track"
-        >
+      <main className='main-content'>
+        <ModalWindow withOpenButton openButtonText='Add New Track'>
           <TrackForm
             updateTrackList={updateTrackList}
             page={page}
@@ -81,4 +77,4 @@ const Beatroot = () => {
   );
 };
 
-export default Beatroot;
+export default MusicBeast;

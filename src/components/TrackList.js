@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { getTracks, deleteTrack, getTrack } from '../api/beatroot-api';
+import { getTracks, deleteTrack, getTrack } from '../api/music-beast-api';
 import ModalWindow from './ModalWindow';
 import TrackForm from './TrackForm';
 import Lyrics from './Lyrics';
@@ -12,7 +12,10 @@ import play from '../assets/play.png';
 import './css/tracklist.css';
 
 const TrackList = props => {
-  const [selectedTrack, setSelectedTrack] = useState({ lyrics: '', artist: { name: '' } });
+  const [selectedTrack, setSelectedTrack] = useState({
+    lyrics: '',
+    artist: { name: '' }
+  });
   const [editTrackModalOpen, setEditTrackModalOpen] = useState(false);
   const [lyricsModalOpen, setLyricsModalOpen] = useState(false);
 
@@ -27,16 +30,16 @@ const TrackList = props => {
     page
   } = props;
 
-  const handleTrackPlay = (event) => {
+  const handleTrackPlay = event => {
     const clickedTrackId = Number(event.target.name);
-    const clickedTrack = tracks.find((track) => track.id === clickedTrackId);
+    const clickedTrack = tracks.find(track => track.id === clickedTrackId);
     if (clickedTrack) {
       setSelectedTrackToPlay(clickedTrack);
       setShouldPlay(true);
     }
   };
 
-  const handleDeleteTrack = async (event) => {
+  const handleDeleteTrack = async event => {
     setLoading(true);
     const clickedTrackId = event.target.name;
     const response = await deleteTrack(clickedTrackId);
@@ -46,7 +49,7 @@ const TrackList = props => {
     }
   };
 
-  const handleEditTrack = async (event) => {
+  const handleEditTrack = async event => {
     setLoading(true);
     const clickedTrackId = event.target.name;
     const trackWithAllData = await getTrack(clickedTrackId);
@@ -55,7 +58,7 @@ const TrackList = props => {
     setLoading(false);
   };
 
-  const handleLyricsClick = async (event) => {
+  const handleLyricsClick = async event => {
     setLoading(true);
     const clickedTrackId = event.target.name;
     const trackWithAllData = await getTrack(clickedTrackId);
@@ -66,93 +69,76 @@ const TrackList = props => {
 
   return (
     <>
-      <section className="tracklist-container">
-        {!loading ? tracks.map((track, index) => {
-          const { id, title, artist, isrc } = track;
+      <section className='tracklist-container'>
+        {!loading ? (
+          tracks.map((track, index) => {
+            const { id, title, artist, isrc } = track;
 
-          const testId = `track-${index + 1}`;
-          const uniqueKey = Date.now() + Math.random() + index;
+            const testId = `track-${index + 1}`;
+            const uniqueKey = Date.now() + Math.random() + index;
 
-          return (
-            <div
-              className="track-container"
-              data-testid={testId}
-              key={uniqueKey}
-            >
-              <button
-                className="track-image-button"
-                type="button"
-                onClick={handleTrackPlay}
-              >
-                <img
-                  name={id}
-                  className="track-image"
-                  alt="track cover art"
-                  src={trackImage}
-                />
-                <img
-                  name={id}
-                  data-testid={`track-play-${index + 1}`}
-                  className="track-play-img"
-                  alt="track play button"
-                  src={play}
-                />
-              </button>
-              <div className="track-title-container">
-                <p className="track-title">{title}</p>
-                <p className="track-artist">{artist.name}</p>
+            return (
+              <div className='track-container' data-testid={testId} key={uniqueKey}>
+                <button
+                  className='track-image-button'
+                  type='button'
+                  onClick={handleTrackPlay}
+                >
+                  <img
+                    name={id}
+                    className='track-image'
+                    alt='track cover art'
+                    src={trackImage}
+                  />
+                  <img
+                    name={id}
+                    data-testid={`track-play-${index + 1}`}
+                    className='track-play-img'
+                    alt='track play button'
+                    src={play}
+                  />
+                </button>
+                <div className='track-title-container'>
+                  <p className='track-title'>{title}</p>
+                  <p className='track-artist'>{artist.name}</p>
+                </div>
+                <div className='track-icons-container'>
+                  <button name={id} type='button' onClick={handleDeleteTrack}>
+                    <img
+                      name={id}
+                      className='icon icon-delete'
+                      alt='icon to delete'
+                      src={deleteIcon}
+                    />
+                  </button>
+                  <button name={id} type='button' onClick={handleEditTrack}>
+                    <img
+                      name={id}
+                      className='icon icon-edit'
+                      alt='icon to edit'
+                      src={editIcon}
+                    />
+                  </button>
+                  <button name={id} type='button' onClick={handleLyricsClick}>
+                    <img
+                      name={id}
+                      className='icon icon-lyrics'
+                      alt='icon to lyrics'
+                      src={lyricsIcon}
+                    />
+                  </button>
+                </div>
+                <p className='track-isrc'>{isrc}</p>
               </div>
-              <div className="track-icons-container">
-                <button
-                  name={id}
-                  type="button"
-                  onClick={handleDeleteTrack}
-                >
-                  <img
-                    name={id}
-                    className="icon icon-delete"
-                    alt="icon to delete"
-                    src={deleteIcon}
-                  />
-                </button>
-                <button
-                  name={id}
-                  type="button"
-                  onClick={handleEditTrack}
-                >
-                  <img
-                    name={id}
-                    className="icon icon-edit"
-                    alt="icon to edit"
-                    src={editIcon}
-                  />
-                </button>
-                <button
-                  name={id}
-                  type="button"
-                  onClick={handleLyricsClick}
-                >
-                  <img
-                    name={id}
-                    className="icon icon-lyrics"
-                    alt="icon to lyrics"
-                    src={lyricsIcon}
-                  />
-                </button>
-              </div>
-              <p className="track-isrc">{isrc}</p>
-            </div>
-          );
-        }) : (
-          <p className="loading">Loading</p>
+            );
+          })
+        ) : (
+          <p className='loading'>Loading</p>
         )}
       </section>
       <div>
         {lyricsModalOpen && !editTrackModalOpen && (
-          <ModalWindow
-            isOpen={lyricsModalOpen}
-            setIsOpen={setLyricsModalOpen}
-          >
+          <ModalWindow isOpen={lyricsModalOpen} setIsOpen={setLyricsModalOpen}>
             <Lyrics
               selectedLyrics={selectedTrack.lyrics}
               title={selectedTrack.title}
@@ -161,10 +147,7 @@ const TrackList = props => {
           </ModalWindow>
         )}
         {editTrackModalOpen && !lyricsModalOpen && (
-          <ModalWindow
-            isOpen={editTrackModalOpen}
-            setIsOpen={setEditTrackModalOpen}
-          >
+          <ModalWindow isOpen={editTrackModalOpen} setIsOpen={setEditTrackModalOpen}>
             <TrackForm
               track={selectedTrack}
               updateTrackList={updateTrackList}
@@ -187,10 +170,7 @@ TrackList.propTypes = {
   setSelectedTrackToPlay: PropTypes.func.isRequired,
   setShouldPlay: PropTypes.func.isRequired,
   updateTrackList: PropTypes.func.isRequired,
-  tracksPerPage: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]).isRequired,
+  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   page: PropTypes.number.isRequired
 };
 

@@ -32,39 +32,49 @@ const Header = props => {
   };
 
   return (
-    <header className="header-container">
-      <div className="logo-container">
-        <span className="logo logo-main">Beatroot</span>
-        <span className="logo logo-secondary">Lite</span>
+    <header className='header-container'>
+      <div className='logo-container'>
+        <span className='logo logo-main'>Music Beast</span>
+        <span className='logo logo-secondary'>Manager</span>
       </div>
-      <div className="arrows-container">
+      <div className='arrows-container'>
         <button
           disabled={!prevPage}
-          name="back"
-          type="button"
-          data-testid="back-button"
+          name='back'
+          type='button'
+          data-testid='back-button'
           className={backButtonClass}
           onClick={handleArrowOnClick}
         >
-          <img className="arrow arrow-back" alt="arrow back" src={arrow} name="arrow-back" />
+          <img
+            className='arrow arrow-back'
+            alt='arrow back'
+            src={arrow}
+            name='arrow-back'
+          />
         </button>
-        <span className="header-page-number">{page}</span>
+        <span className='header-page-number'>{page}</span>
         <button
           disabled={!nextPage}
-          name="forward"
-          type="button"
-          data-testid="forward-button"
+          name='forward'
+          type='button'
+          data-testid='forward-button'
           className={forwardButtonClass}
           onClick={handleArrowOnClick}
         >
-          <img className="arrow arrow-forward" alt="arrow forward" src={arrow} name="arrow-forward" />
+          <img
+            className='arrow arrow-forward'
+            alt='arrow forward'
+            src={arrow}
+            name='arrow-forward'
+          />
         </button>
       </div>
-      <div className="select-container">
+      <div className='select-container'>
         <span>Tracks per page</span>
         <select
-          data-testid="pagination-select"
-          name="select-tracks-per-page"
+          data-testid='pagination-select'
+          name='select-tracks-per-page'
           value={tracksPerPage}
           onChange={handleSelectOnChange}
         >
@@ -83,10 +93,7 @@ Header.propTypes = {
   loading: PropTypes.bool.isRequired,
   paginationData: PropTypes.object.isRequired,
   setTracksPerPage: PropTypes.func.isRequired,
-  tracksPerPage: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]).isRequired
+  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 };
 
 export default Header;

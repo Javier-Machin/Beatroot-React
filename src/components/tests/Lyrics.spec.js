@@ -7,18 +7,13 @@ import nock from 'nock';
 import Lyrics from '../Lyrics';
 import { getTracksMockData, getPaginationMockData } from '../../../__mocks__/tracksData';
 
-const scope = nock(
-  'https://sync-api.beatroot.com/accounts/beatroot-records'
-);
+const scope = nock('http://localhost:3000/');
 
 beforeEach(() => {
   scope
     .get('/tracks')
     .query({ page: 1, per_page: 10 })
-    .reply(
-      200,
-      { tracks: getTracksMockData(10), meta: getPaginationMockData() },
-    );
+    .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
 });
 
 describe('Lyrics component', () => {
