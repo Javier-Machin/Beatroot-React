@@ -3,23 +3,26 @@ import Axios from 'axios';
 const musicBeastApi = Axios.create({
   baseURL: 'http://localhost:3000/',
   headers: {
-    Authorization: ''
+    Authorization:
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzU0OTYzNzJ9.FsiY4TfV_MlyY6xHvlKoqbzsYir2Tpkfbx2oo7z06PQ'
   }
 });
 
 const getTracks = async (page = 1, tracksPerPage = 10) => {
   try {
-    const response = await musicBeastApi.get(
-      `tracks?page=${page}&per_page=${tracksPerPage}`
-    );
-    const tracks = response.data.tracks.map(track => ({
+    // `tracks?page=${page}&per_page=${tracksPerPage}`
+    const response = await musicBeastApi.get('tracks');
+
+    // const tracks = response.data.tracks.map
+    const tracks = response.data.map(track => ({
       id: track.id,
       title: track.title,
       artist: track.artist,
-      isrc: track.isrc
+      lyrics: track.lyrics
     }));
 
-    const paginationData = response.data.meta.pagination;
+    // const paginationData = response.data.meta.pagination;
+    const paginationData = { per_page: 5, page: 1 };
 
     return { tracks, paginationData };
   } catch (error) {
@@ -30,8 +33,7 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
 const getTrack = async trackId => {
   try {
     const response = await musicBeastApi.get(`tracks/${trackId}`);
-    const { data } = response;
-    const { track } = data;
+    const { data: track } = response;
 
     return track;
   } catch (error) {
