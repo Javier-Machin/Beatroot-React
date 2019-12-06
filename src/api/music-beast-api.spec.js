@@ -9,7 +9,10 @@ const scope = nock('http://localhost:3000/');
 scope
   .get('/tracks')
   .query({ page: 1, per_page: 10 })
-  .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
+  .reply(200, {
+    tracks: getTracksMockData(10),
+    pagination: getPaginationMockData().pagination
+  });
 
 describe('API interaction functions', () => {
   describe('getTracks', () => {
@@ -17,45 +20,40 @@ describe('API interaction functions', () => {
       scope
         .get('/tracks')
         .query({ page: 1, per_page: 5 })
-        .reply(200, { tracks: getTracksMockData(5), meta: getPaginationMockData() });
+        .reply(200, {
+          tracks: getTracksMockData(5),
+          pagination: getPaginationMockData().pagination
+        });
       const response = await getTracks(1, 5);
       expect(response).toMatchObject({
         paginationData: {
-          current_page: 1,
           next_page: 2,
-          prev_page: null,
-          total_count: 14,
-          total_pages: 2
+          prev_page: null
         },
         tracks: [
           {
             artist: 'test artist-1',
             id: 1,
-            isrc: 'test isrc-1',
             title: 'test track-1'
           },
           {
             artist: 'test artist-2',
             id: 2,
-            isrc: 'test isrc-2',
             title: 'test track-2'
           },
           {
             artist: 'test artist-3',
             id: 3,
-            isrc: 'test isrc-3',
             title: 'test track-3'
           },
           {
             artist: 'test artist-4',
             id: 4,
-            isrc: 'test isrc-4',
             title: 'test track-4'
           },
           {
             artist: 'test artist-5',
             id: 5,
-            isrc: 'test isrc-5',
             title: 'test track-5'
           }
         ]

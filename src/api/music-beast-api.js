@@ -4,25 +4,24 @@ const musicBeastApi = Axios.create({
   baseURL: 'http://localhost:3000/',
   headers: {
     Authorization:
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzU0OTYzNzJ9.FsiY4TfV_MlyY6xHvlKoqbzsYir2Tpkfbx2oo7z06PQ'
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzU3MjM3MTh9.twJNVsbcv91od4vLqVhoepFYgFuWC8Jnj9Wz1mVBQmg'
   }
 });
 
 const getTracks = async (page = 1, tracksPerPage = 10) => {
   try {
-    // `tracks?page=${page}&per_page=${tracksPerPage}`
-    const response = await musicBeastApi.get('tracks');
+    const response = await musicBeastApi.get(
+      `tracks?page=${page}&per_page=${tracksPerPage}`
+    );
 
-    // const tracks = response.data.tracks.map
-    const tracks = response.data.map(track => ({
+    const tracks = response.data.tracks.map(track => ({
       id: track.id,
       title: track.title,
       artist: track.artist,
       lyrics: track.lyrics
     }));
 
-    // const paginationData = response.data.meta.pagination;
-    const paginationData = { per_page: 5, page: 1 };
+    const paginationData = response.data.pagination;
 
     return { tracks, paginationData };
   } catch (error) {
@@ -54,7 +53,7 @@ const getArtist = async artistName => {
 
 const createTrack = async newTrack => {
   try {
-    const response = await musicBeastApi.post('tracks', { track: newTrack });
+    const response = await musicBeastApi.post('tracks', { ...newTrack });
     return response;
   } catch (error) {
     return { error };
@@ -73,7 +72,7 @@ const deleteTrack = async trackId => {
 const updateTrack = async updatedTrack => {
   try {
     const response = await musicBeastApi.patch(`tracks/${updatedTrack.id}`, {
-      track: updatedTrack
+      ...updatedTrack
     });
     return response;
   } catch (error) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getTracks, getArtist, createTrack, updateTrack } from '../api/music-beast-api';
+import { getTracks, createTrack, updateTrack } from '../api/music-beast-api';
 import './css/trackform.css';
 
 class TrackForm extends React.Component {
@@ -24,7 +24,7 @@ class TrackForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const { id, title, artist, explicit, isrc, lyrics } = this.state;
+    const { id, title, artist, explicit, lyrics } = this.state;
     const {
       setModalIsOpen,
       updateTrackList,
@@ -37,116 +37,88 @@ class TrackForm extends React.Component {
     // If we don't have id we are creating a new track
     if (!id && title && artist) {
       setLoading(true);
-      const artistNameQuery = artist.replace(' ', '+');
-      const foundArtist = await getArtist(artistNameQuery);
 
-      if (foundArtist) {
-        const newTrack = {
-          title,
-          artist_id: foundArtist.id,
-          explicit,
-          isrc,
-          lyrics
-        };
+      const newTrack = {
+        title,
+        artist: {
+          name: artist
+        },
+        explicit,
+        lyrics
+      };
 
-        await createTrack(newTrack);
-        const response = await getTracks(page, tracksPerPage);
-        updateTrackList(response);
-        setModalIsOpen(false);
-      } else {
-        // I would handle it better but already way beyond the scope of the exercise
-        // eslint-disable-next-line no-alert
-        alert('Artist not found, try a different one');
-      }
+      await createTrack(newTrack);
+      const response = await getTracks(page, tracksPerPage);
+      updateTrackList(response);
+      setModalIsOpen(false);
       // If we have id we are editing
     } else if (id && title && artist) {
       setLoading(true);
-      const artistNameQuery = artist.replace(' ', '+');
-      const foundArtist = await getArtist(artistNameQuery);
 
-      if (foundArtist) {
-        const updatedTrack = {
-          id,
-          title,
-          artist_id: foundArtist.id,
-          explicit,
-          isrc,
-          lyrics
-        };
+      const updatedTrack = {
+        id,
+        title,
+        artist: {
+          name: artist
+        },
+        explicit,
+        lyrics
+      };
 
-        await updateTrack(updatedTrack);
-        const response = await getTracks(page, tracksPerPage);
-        updateTrackList(response);
-        setEditTrackModalOpen(false);
-      } else {
-        // I would handle it better but already way beyond the scope of the exercise
-        // eslint-disable-next-line no-alert
-        alert('Artist not found, try a different one');
-      }
+      await updateTrack(updatedTrack);
+      const response = await getTracks(page, tracksPerPage);
+      updateTrackList(response);
+      setEditTrackModalOpen(false);
     }
   }
 
   render() {
-    const {
-      title = '',
-      artist = '',
-      explicit = false,
-      lyrics = '',
-      isrc = ''
-    } = this.state;
+    const { title = '', artist = '', explicit = false, lyrics = '' } = this.state;
 
     return (
-      <form data-testid='track-form' className='track-form'>
+      <form data-testid="track-form" className="track-form">
         <input
-          type='text'
-          data-testid='title-input'
-          className='text-input title-input'
-          name='title'
+          type="text"
+          data-testid="title-input"
+          className="text-input title-input"
+          name="title"
           onChange={this.handleTextOnChange}
           value={String(title)}
-          placeholder='Song title'
+          placeholder="Song title"
           required
         />
         <input
-          type='text'
-          className='text-input artist-input'
-          name='artist'
+          type="text"
+          className="text-input artist-input"
+          name="artist"
           onChange={this.handleTextOnChange}
           value={String(artist)}
-          placeholder='Artist name'
+          placeholder="Artist name"
           required
         />
-        <input
-          type='text'
-          className='text-input isrc-input'
-          name='isrc'
-          onChange={this.handleTextOnChange}
-          value={String(isrc)}
-          placeholder='ISRC'
-        />
-        <div className='explicit-input-container'>
-          <label htmlFor='explicit-checkbox'>
+        <div className="explicit-input-container">
+          <label htmlFor="explicit-checkbox">
             Explicit Song
             <input
               checked={explicit}
-              type='checkbox'
-              className='explicit-input'
-              name='explicit'
-              id='explicit-checkbox'
+              type="checkbox"
+              className="explicit-input"
+              name="explicit"
+              id="explicit-checkbox"
               onChange={this.handleExplicitOnChange}
               value={!!explicit}
             />
           </label>
         </div>
         <textarea
-          type='text'
-          className='lyrics-input'
-          name='lyrics'
+          type="text"
+          className="lyrics-input"
+          name="lyrics"
           onChange={this.handleTextOnChange}
           value={String(lyrics)}
-          placeholder='Lyrics'
+          placeholder="Lyrics"
         />
-        <button className='track-form-submit' type='submit' onClick={this.handleSubmit}>
+        <button className="track-form-submit" type="submit" onClick={this.handleSubmit}>
           Submit
         </button>
       </form>

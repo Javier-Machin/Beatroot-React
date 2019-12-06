@@ -39,7 +39,7 @@ const MusicBeast = () => {
   }, [page, tracksPerPage]);
 
   return (
-    <div className='app-container'>
+    <div className="app-container">
       <Header
         page={page}
         setPage={setPage}
@@ -48,8 +48,8 @@ const MusicBeast = () => {
         paginationData={paginationData}
         loading={loading}
       />
-      <main className='main-content'>
-        <ModalWindow withOpenButton openButtonText='Add New Track'>
+      <main className="main-content">
+        <ModalWindow withOpenButton openButtonText="Add New Track">
           <TrackForm
             updateTrackList={updateTrackList}
             page={page}

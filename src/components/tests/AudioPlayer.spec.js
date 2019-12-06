@@ -15,7 +15,10 @@ beforeEach(() => {
   scope
     .get('/tracks')
     .query({ page: 1, per_page: 10 })
-    .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
+    .reply(200, {
+      tracks: getTracksMockData(10),
+      pagination: getPaginationMockData().pagination
+    });
 });
 
 describe('Audio player component', () => {

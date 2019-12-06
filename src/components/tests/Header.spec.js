@@ -16,7 +16,10 @@ beforeEach(() => {
   scope
     .get('/tracks')
     .query({ page: 1, per_page: 10 })
-    .reply(200, { tracks: getTracksMockData(10), meta: getPaginationMockData() });
+    .reply(200, {
+      tracks: getTracksMockData(10),
+      pagination: getPaginationMockData().pagination
+    });
 });
 
 describe('Header and pagination elements', () => {
@@ -42,7 +45,10 @@ describe('Header and pagination elements', () => {
     scope
       .get('/tracks')
       .query({ page: 1, per_page: 15 })
-      .reply(200, { tracks: getTracksMockData(15), meta: getPaginationMockData() });
+      .reply(200, {
+        tracks: getTracksMockData(15),
+        pagination: getPaginationMockData().pagination
+      });
 
     // Change tracks per page
     fireEvent.change(getByTestId('pagination-select'), {
@@ -64,7 +70,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 2, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(20),
-        meta: getPaginationMockData(2, 1, null, 2, 40)
+        pagination: getPaginationMockData(2, 1, null, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('forward-button'));
@@ -82,7 +88,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 2, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(20),
-        meta: getPaginationMockData(2, 1, null, 2, 40)
+        pagination: getPaginationMockData(2, 1, null, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('forward-button'));
@@ -112,7 +118,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 2, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(20),
-        meta: getPaginationMockData(2, 1, null, 2, 40)
+        pagination: getPaginationMockData(2, 1, null, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('forward-button'));
@@ -123,7 +129,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 1, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(10),
-        meta: getPaginationMockData(1, null, 2, 2, 40)
+        pagination: getPaginationMockData(1, null, 2, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('back-button'));
@@ -143,7 +149,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 2, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(20),
-        meta: getPaginationMockData(2, 1, null, 2, 40)
+        pagination: getPaginationMockData(2, 1, null, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('forward-button'));
@@ -154,7 +160,7 @@ describe('Header and pagination elements', () => {
       .query({ page: 1, per_page: 10 })
       .reply(200, {
         tracks: getTracksMockData(10),
-        meta: getPaginationMockData(1, null, 2, 2, 40)
+        pagination: getPaginationMockData(1, null, 2, 2, 40).pagination
       });
 
     fireEvent.click(getByTestId('back-button'));
