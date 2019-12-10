@@ -30,11 +30,13 @@ const TrackList = props => {
     page
   } = props;
 
-  const handleTrackPlay = event => {
+  const handleTrackPlay = async event => {
     const clickedTrackId = Number(event.target.name);
-    const clickedTrack = tracks.find(track => track.id === clickedTrackId);
-    if (clickedTrack) {
-      setSelectedTrackToPlay(clickedTrack);
+    setLoading(true);
+    const trackWithAllData = await getTrack(clickedTrackId);
+    setLoading(false);
+    if (trackWithAllData.file) {
+      setSelectedTrackToPlay(trackWithAllData);
       setShouldPlay(true);
     }
   };
@@ -61,7 +63,7 @@ const TrackList = props => {
   const handleLyricsClick = async event => {
     setLoading(true);
     const clickedTrackId = event.target.name;
-    const trackWithAllData = await getTrack(clickedTrackId);
+    const trackWithAllData = await getTrack(clickedTrackId, 'lyrics');
     setSelectedTrack(trackWithAllData);
     setLyricsModalOpen(true);
     setLoading(false);
@@ -69,7 +71,7 @@ const TrackList = props => {
 
   return (
     <>
-      <section className='tracklist-container'>
+      <section className="tracklist-container">
         {!loading ? (
           tracks.map((track, index) => {
             const { id, title, artist, isrc } = track;
@@ -78,62 +80,62 @@ const TrackList = props => {
             const uniqueKey = Date.now() + Math.random() + index;
 
             return (
-              <div className='track-container' data-testid={testId} key={uniqueKey}>
+              <div className="track-container" data-testid={testId} key={uniqueKey}>
                 <button
-                  className='track-image-button'
-                  type='button'
+                  className="track-image-button"
+                  type="button"
                   onClick={handleTrackPlay}
                 >
                   <img
                     name={id}
-                    className='track-image'
-                    alt='track cover art'
+                    className="track-image"
+                    alt="track cover art"
                     src={trackImage}
                   />
                   <img
                     name={id}
                     data-testid={`track-play-${index + 1}`}
-                    className='track-play-img'
-                    alt='track play button'
+                    className="track-play-img"
+                    alt="track play button"
                     src={play}
                   />
                 </button>
-                <div className='track-title-container'>
-                  <p className='track-title'>{title}</p>
-                  <p className='track-artist'>{artist.name}</p>
+                <div className="track-title-container">
+                  <p className="track-title">{title}</p>
+                  <p className="track-artist">{artist.name}</p>
                 </div>
-                <div className='track-icons-container'>
-                  <button name={id} type='button' onClick={handleDeleteTrack}>
+                <div className="track-icons-container">
+                  <button name={id} type="button" onClick={handleDeleteTrack}>
                     <img
                       name={id}
-                      className='icon icon-delete'
-                      alt='icon to delete'
+                      className="icon icon-delete"
+                      alt="icon to delete"
                       src={deleteIcon}
                     />
                   </button>
-                  <button name={id} type='button' onClick={handleEditTrack}>
+                  <button name={id} type="button" onClick={handleEditTrack}>
                     <img
                       name={id}
-                      className='icon icon-edit'
-                      alt='icon to edit'
+                      className="icon icon-edit"
+                      alt="icon to edit"
                       src={editIcon}
                     />
                   </button>
-                  <button name={id} type='button' onClick={handleLyricsClick}>
+                  <button name={id} type="button" onClick={handleLyricsClick}>
                     <img
                       name={id}
-                      className='icon icon-lyrics'
-                      alt='icon to lyrics'
+                      className="icon icon-lyrics"
+                      alt="icon to lyrics"
                       src={lyricsIcon}
                     />
                   </button>
                 </div>
-                <p className='track-isrc'>{isrc}</p>
+                <p className="track-isrc">{isrc}</p>
               </div>
             );
           })
         ) : (
-          <p className='loading'>Loading</p>
+          <p className="loading">Loading</p>
         )}
       </section>
       <div>

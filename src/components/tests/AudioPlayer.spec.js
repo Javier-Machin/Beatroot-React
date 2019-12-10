@@ -32,6 +32,15 @@ describe('Audio player component', () => {
     const { getByTestId } = render(<MusicBeast />);
 
     await waitForElement(() => getByTestId('track-1'));
+    scope
+      .get('/tracks/1')
+      .query({ serializer: '' })
+      .reply(200, {
+        id: 1,
+        title: 'test track-1',
+        artist: 'test artist-1',
+        file: 'data'
+      });
     fireEvent.click(getByTestId('track-play-1'));
     await waitForElement(() => getByTestId('track-1'));
     expect(getByTestId('audio-display-text')).toHaveTextContent('test track-1 -');

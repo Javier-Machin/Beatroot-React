@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
-import song from '../assets/fearless-tule.mp3';
 import './css/audioplayer.css';
 
 const AudioPlayer = props => {
   const [playing, setPlaying] = useState(false);
   const { track = {}, shouldPlay, setShouldPlay } = props;
-  const { title = '- Welcome to Music Beast Manager', artist = {} } = track;
+  const { title = '- Welcome to Music Beast Manager', artist = {}, file = '' } = track;
   const { name = '' } = artist;
 
   const playerRef = React.createRef();
@@ -23,19 +22,19 @@ const AudioPlayer = props => {
   }, [playerRef, shouldPlay, setShouldPlay]);
 
   return (
-    <div className='audio-container'>
-      <div className='audio-display'>
-        <span data-testid='audio-display-text' className='audio-display-text'>
+    <div className="audio-container">
+      <div className="audio-display">
+        <span data-testid="audio-display-text" className="audio-display-text">
           {`${title} - ${name}`}
         </span>
       </div>
       <ReactPlayer
         ref={playerRef}
-        data-testid='audio-player'
-        className='audio-player'
-        width='300px'
-        height='50px'
-        url={song}
+        data-testid="audio-player"
+        className="audio-player"
+        width="300px"
+        height="50px"
+        url={file}
         controls
         playing={playing}
       />

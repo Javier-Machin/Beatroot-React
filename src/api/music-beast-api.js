@@ -4,7 +4,7 @@ const musicBeastApi = Axios.create({
   baseURL: 'http://localhost:3000/',
   headers: {
     Authorization:
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzU3MjM3MTh9.twJNVsbcv91od4vLqVhoepFYgFuWC8Jnj9Wz1mVBQmg'
+      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzYwOTUyNTh9.W9Vn2Q9zxc7wPLUZ0RtZNp0qzG5AWRlL2kzhsEznKFA'
   }
 });
 
@@ -18,7 +18,8 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
       id: track.id,
       title: track.title,
       artist: track.artist,
-      lyrics: track.lyrics
+      lyrics: track.lyrics,
+      file: track.file
     }));
 
     const paginationData = response.data.pagination;
@@ -29,9 +30,11 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
   }
 };
 
-const getTrack = async trackId => {
+const getTrack = async (trackId, serializer = '') => {
   try {
-    const response = await musicBeastApi.get(`tracks/${trackId}`);
+    const response = await musicBeastApi.get(
+      `tracks/${trackId}?serializer=${serializer}`
+    );
     const { data: track } = response;
 
     return track;

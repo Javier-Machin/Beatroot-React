@@ -41,8 +41,4 @@ const getPaginationMockData = (
   }
 });
 
-export {
-  getTracksMockData,
-  getTrackMockData,
-  getPaginationMockData
-};
+export { getTracksMockData, getTrackMockData, getPaginationMockData };
