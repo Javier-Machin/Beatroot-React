@@ -1,17 +1,21 @@
 import Axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const musicBeastApi = Axios.create({
-  baseURL: 'http://localhost:3000/',
-  headers: {
-    Authorization:
-      'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1NzYwOTUyNTh9.W9Vn2Q9zxc7wPLUZ0RtZNp0qzG5AWRlL2kzhsEznKFA'
-  }
+  baseURL: 'http://localhost:3000/'
 });
 
-const getTracks = async (page = 1, tracksPerPage = 10) => {
+const getTracks = async (page = 1, tracksPerPage = 10, setLoggedIn) => {
   try {
     const response = await musicBeastApi.get(
-      `tracks?page=${page}&per_page=${tracksPerPage}`
+      `tracks?page=${page}&per_page=${tracksPerPage}`,
+      {
+        headers: {
+          Authorization: cookies.get('auth') || ''
+        }
+      }
     );
 
     const tracks = response.data.tracks.map(track => ({
@@ -26,11 +30,28 @@ const getTracks = async (page = 1, tracksPerPage = 10) => {
 
     return { tracks, paginationData };
   } catch (error) {
+    if (String(error).includes('422')) {
+      setLoggedIn(false);
+    }
     return { error };
   }
 };
 
-const getTrack = async (trackId, serializer = '') => {
+const logIn = async (email, password, setLoggedIn) => {
+  try {
+    const response = await musicBeastApi.post('/auth/login', {
+      email,
+      password
+    });
+    cookies.set('auth', response.data.auth_token, { path: '/' });
+    setLoggedIn(true);
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+const getTrack = async (trackId, serializer = '', setLoggedIn) => {
   try {
     const response = await musicBeastApi.get(
       `tracks/${trackId}?serializer=${serializer}`
@@ -39,6 +60,9 @@ const getTrack = async (trackId, serializer = '') => {
 
     return track;
   } catch (error) {
+    if (String(error).includes('422')) {
+      setLoggedIn(false);
+    }
     return { error };
   }
 };
@@ -54,33 +78,42 @@ const getArtist = async artistName => {
   }
 };
 
-const createTrack = async newTrack => {
+const createTrack = async (newTrack, setLoggedIn) => {
   try {
     const response = await musicBeastApi.post('tracks', { ...newTrack });
     return response;
   } catch (error) {
+    if (String(error).includes('422')) {
+      setLoggedIn(false);
+    }
     return { error };
   }
 };
 
-const deleteTrack = async trackId => {
+const deleteTrack = async (trackId, setLoggedIn) => {
   try {
     const response = await musicBeastApi.delete(`tracks/${trackId}`);
     return response;
   } catch (error) {
+    if (String(error).includes('422')) {
+      setLoggedIn(false);
+    }
     return { error };
   }
 };
 
-const updateTrack = async updatedTrack => {
+const updateTrack = async (updatedTrack, setLoggedIn) => {
   try {
     const response = await musicBeastApi.patch(`tracks/${updatedTrack.id}`, {
       ...updatedTrack
     });
     return response;
   } catch (error) {
+    if (String(error).includes('422')) {
+      setLoggedIn(false);
+    }
     return { error };
   }
 };
 
-export { getTracks, getTrack, getArtist, createTrack, deleteTrack, updateTrack };
+export { getTracks, getTrack, getArtist, createTrack, deleteTrack, updateTrack, logIn };

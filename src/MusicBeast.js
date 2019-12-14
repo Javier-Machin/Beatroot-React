@@ -5,6 +5,7 @@ import TrackList from './components/TrackList';
 import TrackForm from './components/TrackForm';
 import AudioPlayer from './components/AudioPlayer';
 import ModalWindow from './components/ModalWindow';
+import LogInForm from './components/LogInForm';
 import './components/css/music-beast.css';
 
 const MusicBeast = () => {
@@ -12,6 +13,7 @@ const MusicBeast = () => {
   const [tracksPerPage, setTracksPerPage] = useState(10);
   const [selectedTrackToPlay, setSelectedTrackToPlay] = useState({});
   const [shouldPlay, setShouldPlay] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
@@ -29,14 +31,18 @@ const MusicBeast = () => {
 
   useEffect(() => {
     let stopRequest = false;
-    setLoading(true);
-    getTracks(page, tracksPerPage).then(response => {
-      if (!stopRequest) updateTrackList(response);
-    });
+    if (loggedIn) {
+      setLoading(true);
+      getTracks(page, tracksPerPage, setLoggedIn).then(response => {
+        if (!stopRequest) updateTrackList(response);
+      });
+    }
     return () => {
       stopRequest = true;
     };
-  }, [page, tracksPerPage]);
+  }, [page, tracksPerPage, loggedIn]);
+
+  if (!loggedIn) return <LogInForm setLoggedIn={setLoggedIn} />;
 
   return (
     <div className="app-container">
