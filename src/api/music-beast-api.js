@@ -43,8 +43,38 @@ const logIn = async (email, password, setLoggedIn) => {
       email,
       password
     });
-    cookies.set('auth', response.data.auth_token, { path: '/' });
-    setLoggedIn(true);
+
+    const { data = {} } = response;
+    const { auth_token = '' } = data;
+
+    if (auth_token) {
+      cookies.set('auth', auth_token, { path: '/' });
+      setLoggedIn(true);
+    }
+
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
+  try {
+    const response = await musicBeastApi.post('/signup', {
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirm
+    });
+
+    const { data = {} } = response;
+    const { auth_token = '' } = data;
+
+    if (auth_token) {
+      cookies.set('auth', auth_token, { path: '/' });
+      setLoggedIn(true);
+    }
+
     return response;
   } catch (error) {
     return { error };
@@ -63,17 +93,6 @@ const getTrack = async (trackId, serializer = '', setLoggedIn) => {
     if (String(error).includes('422')) {
       setLoggedIn(false);
     }
-    return { error };
-  }
-};
-
-const getArtist = async artistName => {
-  try {
-    const response = await musicBeastApi.get(`artists?filters[text]=${artistName}`);
-
-    const artist = response.data.artists[0];
-    return artist;
-  } catch (error) {
     return { error };
   }
 };
@@ -116,4 +135,4 @@ const updateTrack = async (updatedTrack, setLoggedIn) => {
   }
 };
 
-export { getTracks, getTrack, getArtist, createTrack, deleteTrack, updateTrack, logIn };
+export { getTracks, getTrack, createTrack, deleteTrack, updateTrack, logIn, signUp };

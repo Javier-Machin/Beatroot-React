@@ -20,7 +20,7 @@ const TrackList = props => {
   const [lyricsModalOpen, setLyricsModalOpen] = useState(false);
 
   const {
-    tracks,
+    tracks = [],
     loading,
     setLoading,
     setSelectedTrackToPlay,
@@ -74,7 +74,7 @@ const TrackList = props => {
       <section className="tracklist-container">
         {!loading ? (
           tracks.map((track, index) => {
-            const { id, title, artist, isrc } = track;
+            const { id, title, artist } = track;
 
             const testId = `track-${index + 1}`;
             const uniqueKey = Date.now() + Math.random() + index;
@@ -130,7 +130,6 @@ const TrackList = props => {
                     />
                   </button>
                 </div>
-                <p className="track-isrc">{isrc}</p>
               </div>
             );
           })

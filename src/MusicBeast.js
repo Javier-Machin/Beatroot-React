@@ -5,7 +5,7 @@ import TrackList from './components/TrackList';
 import TrackForm from './components/TrackForm';
 import AudioPlayer from './components/AudioPlayer';
 import ModalWindow from './components/ModalWindow';
-import LogInForm from './components/LogInForm';
+import AuthForm from './components/AuthForm';
 import './components/css/music-beast.css';
 
 const MusicBeast = () => {
@@ -42,7 +42,7 @@ const MusicBeast = () => {
     };
   }, [page, tracksPerPage, loggedIn]);
 
-  if (!loggedIn) return <LogInForm setLoggedIn={setLoggedIn} />;
+  if (!loggedIn) return <AuthForm setLoggedIn={setLoggedIn} />;
 
   return (
     <div className="app-container">

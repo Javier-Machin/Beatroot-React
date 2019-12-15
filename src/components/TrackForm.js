@@ -102,54 +102,54 @@ class TrackForm extends React.Component {
     } = this.state;
 
     return (
-      <form data-testid='track-form' className='track-form'>
+      <form data-testid="track-form" className="track-form">
         <FileInput
           removeFile={this.handleRemoveFile}
           onChange={this.handleFileOnChange}
           file={file}
         />
         <input
-          type='text'
-          data-testid='title-input'
-          className='text-input title-input'
-          name='title'
+          type="text"
+          data-testid="title-input"
+          className="text-input title-input"
+          name="title"
           onChange={this.handleTextOnChange}
           value={String(title)}
-          placeholder='Song title'
+          placeholder="Song title"
           required
         />
         <input
-          type='text'
-          className='text-input artist-input'
-          name='artist'
+          type="text"
+          className="text-input artist-input"
+          name="artist"
           onChange={this.handleTextOnChange}
           value={String(artist)}
-          placeholder='Artist name'
+          placeholder="Artist name"
           required
         />
-        <div className='explicit-input-container'>
-          <label htmlFor='explicit-checkbox'>
+        <div className="explicit-input-container">
+          <label htmlFor="explicit-checkbox">
             Explicit Song
             <input
               checked={explicit}
-              type='checkbox'
-              className='explicit-input'
-              name='explicit'
-              id='explicit-checkbox'
+              type="checkbox"
+              className="explicit-input"
+              name="explicit"
+              id="explicit-checkbox"
               onChange={this.handleExplicitOnChange}
               value={!!explicit}
             />
           </label>
         </div>
         <textarea
-          type='text'
-          className='lyrics-input'
-          name='lyrics'
+          type="text"
+          className="lyrics-input"
+          name="lyrics"
           onChange={this.handleTextOnChange}
           value={String(lyrics)}
-          placeholder='Lyrics'
+          placeholder="Lyrics"
         />
-        <button className='track-form-submit' type='submit' onClick={this.handleSubmit}>
+        <button className="track-form-submit" type="submit" onClick={this.handleSubmit}>
           Submit
         </button>
       </form>

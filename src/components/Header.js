@@ -9,7 +9,7 @@ const Header = props => {
     setPage,
     tracksPerPage,
     setTracksPerPage,
-    paginationData,
+    paginationData = {},
     loading
   } = props;
 
