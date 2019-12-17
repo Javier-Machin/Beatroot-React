@@ -14,7 +14,6 @@
 }
 
 .logo {
-  align-self: center;
   color: var(--main-color);
   cursor: default;
   white-space: nowrap;
@@ -27,6 +26,8 @@
 .logo-secondary {
   margin-top: 1rem;
   font-size: 1rem;
+  position: absolute;
+  margin-left: 175px;
 }
 
 .arrows-container {
