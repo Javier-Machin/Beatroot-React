@@ -84,7 +84,12 @@ const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
 const getTrack = async (trackId, serializer = '', setLoggedIn) => {
   try {
     const response = await musicBeastApi.get(
-      `tracks/${trackId}?serializer=${serializer}`
+      `tracks/${trackId}?serializer=${serializer}`,
+      {
+        headers: {
+          Authorization: cookies.get('auth') || ''
+        }
+      }
     );
     const { data: track } = response;
 
