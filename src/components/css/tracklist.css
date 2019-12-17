@@ -1,6 +1,9 @@
 .tracklist-container {
   align-self: center;
   margin-top: 50px;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
 }
 
 .track-container {
@@ -106,21 +109,20 @@
 }
 
 .loading {
-  margin-top: 50px;
   color: white;
   font-size: 30px;
   animation: dive-in 0.8s ease-out;
-  position: relative;
-  left: 0;
-  bottom: 0;
+  position: absolute;
   z-index: 0;
+  top: 100px;
+  align-self: center;
 }
 
 @keyframes dive-in {
   0% {
-    bottom: 60px;
+    top: 75px;
   }
   100% {
-    bottom: 0px;
+    top: 100px;
   }
 }

@@ -14,7 +14,7 @@ import './css/tracklist.css';
 const TrackList = props => {
   const [selectedTrack, setSelectedTrack] = useState({
     lyrics: '',
-    artist: { name: '' }
+    artist: { name: '' },
   });
   const [editTrackModalOpen, setEditTrackModalOpen] = useState(false);
   const [lyricsModalOpen, setLyricsModalOpen] = useState(false);
@@ -27,7 +27,7 @@ const TrackList = props => {
     setShouldPlay,
     updateTrackList,
     tracksPerPage,
-    page
+    page,
   } = props;
 
   const handleTrackPlay = async event => {
@@ -72,70 +72,71 @@ const TrackList = props => {
   return (
     <>
       <section className="tracklist-container">
-        {!loading ? (
-          tracks.map((track, index) => {
-            const { id, title, artist } = track;
+        {loading && <p className="loading">Loading</p>}
+        {tracks.map((track, index) => {
+          const { id, title, artist } = track;
 
-            const testId = `track-${index + 1}`;
-            const uniqueKey = Date.now() + Math.random() + index;
+          const testId = `track-${index + 1}`;
+          const uniqueKey = Date.now() + Math.random() + index;
 
-            return (
-              <div className="track-container" data-testid={testId} key={uniqueKey}>
-                <button
-                  className="track-image-button"
-                  type="button"
-                  onClick={handleTrackPlay}
-                >
+          return (
+            <div
+              className="track-container"
+              data-testid={testId}
+              key={uniqueKey}
+            >
+              <button
+                className="track-image-button"
+                type="button"
+                onClick={handleTrackPlay}
+              >
+                <img
+                  name={id}
+                  className="track-image"
+                  alt="track cover art"
+                  src={trackImage}
+                />
+                <img
+                  name={id}
+                  data-testid={`track-play-${index + 1}`}
+                  className="track-play-img"
+                  alt="track play button"
+                  src={play}
+                />
+              </button>
+              <div className="track-title-container">
+                <p className="track-title">{title}</p>
+                <p className="track-artist">{artist.name}</p>
+              </div>
+              <div className="track-icons-container">
+                <button name={id} type="button" onClick={handleDeleteTrack}>
                   <img
                     name={id}
-                    className="track-image"
-                    alt="track cover art"
-                    src={trackImage}
-                  />
-                  <img
-                    name={id}
-                    data-testid={`track-play-${index + 1}`}
-                    className="track-play-img"
-                    alt="track play button"
-                    src={play}
+                    className="icon icon-delete"
+                    alt="icon to delete"
+                    src={deleteIcon}
                   />
                 </button>
-                <div className="track-title-container">
-                  <p className="track-title">{title}</p>
-                  <p className="track-artist">{artist.name}</p>
-                </div>
-                <div className="track-icons-container">
-                  <button name={id} type="button" onClick={handleDeleteTrack}>
-                    <img
-                      name={id}
-                      className="icon icon-delete"
-                      alt="icon to delete"
-                      src={deleteIcon}
-                    />
-                  </button>
-                  <button name={id} type="button" onClick={handleEditTrack}>
-                    <img
-                      name={id}
-                      className="icon icon-edit"
-                      alt="icon to edit"
-                      src={editIcon}
-                    />
-                  </button>
-                  <button name={id} type="button" onClick={handleLyricsClick}>
-                    <img
-                      name={id}
-                      className="icon icon-lyrics"
-                      alt="icon to lyrics"
-                      src={lyricsIcon}
-                    />
-                  </button>
-                </div>
+                <button name={id} type="button" onClick={handleEditTrack}>
+                  <img
+                    name={id}
+                    className="icon icon-edit"
+                    alt="icon to edit"
+                    src={editIcon}
+                  />
+                </button>
+                <button name={id} type="button" onClick={handleLyricsClick}>
+                  <img
+                    name={id}
+                    className="icon icon-lyrics"
+                    alt="icon to lyrics"
+                    src={lyricsIcon}
+                  />
+                </button>
               </div>
-            );
-          })
-        ) : (
-          <p className="loading">Loading</p>
-        )}
+            </div>
+          );
+        })}
       </section>
       <div>
         {lyricsModalOpen && !editTrackModalOpen && (
@@ -148,7 +149,10 @@ const TrackList = props => {
           </ModalWindow>
         )}
         {editTrackModalOpen && !lyricsModalOpen && (
-          <ModalWindow isOpen={editTrackModalOpen} setIsOpen={setEditTrackModalOpen}>
+          <ModalWindow
+            isOpen={editTrackModalOpen}
+            setIsOpen={setEditTrackModalOpen}
+          >
             <TrackForm
               track={selectedTrack}
               updateTrackList={updateTrackList}
@@ -171,8 +175,9 @@ TrackList.propTypes = {
   setSelectedTrackToPlay: PropTypes.func.isRequired,
   setShouldPlay: PropTypes.func.isRequired,
   updateTrackList: PropTypes.func.isRequired,
-  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  page: PropTypes.number.isRequired
+  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default TrackList;

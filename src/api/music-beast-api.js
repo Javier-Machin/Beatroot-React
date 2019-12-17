@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const musicBeastApi = Axios.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: 'http://localhost:3000/',
 });
 
 const getTracks = async (page = 1, tracksPerPage = 10, setLoggedIn) => {
@@ -13,9 +13,9 @@ const getTracks = async (page = 1, tracksPerPage = 10, setLoggedIn) => {
       `tracks?page=${page}&per_page=${tracksPerPage}`,
       {
         headers: {
-          Authorization: cookies.get('auth') || ''
-        }
-      }
+          Authorization: cookies.get('auth') || '',
+        },
+      },
     );
 
     const tracks = response.data.tracks.map(track => ({
@@ -23,7 +23,7 @@ const getTracks = async (page = 1, tracksPerPage = 10, setLoggedIn) => {
       title: track.title,
       artist: track.artist,
       lyrics: track.lyrics,
-      file: track.file
+      file: track.file,
     }));
 
     const paginationData = response.data.pagination;
@@ -41,7 +41,7 @@ const logIn = async (email, password, setLoggedIn) => {
   try {
     const response = await musicBeastApi.post('/auth/login', {
       email,
-      password
+      password,
     });
 
     const { data = {} } = response;
@@ -64,7 +64,7 @@ const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
       name,
       email,
       password,
-      password_confirmation: passwordConfirm
+      password_confirmation: passwordConfirm,
     });
 
     const { data = {} } = response;
@@ -84,7 +84,12 @@ const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
 const getTrack = async (trackId, serializer = '', setLoggedIn) => {
   try {
     const response = await musicBeastApi.get(
-      `tracks/${trackId}?serializer=${serializer}`
+      `tracks/${trackId}?serializer=${serializer}`,
+      {
+        headers: {
+          Authorization: cookies.get('auth') || '',
+        },
+      },
     );
     const { data: track } = response;
 
@@ -124,7 +129,7 @@ const deleteTrack = async (trackId, setLoggedIn) => {
 const updateTrack = async (updatedTrack, setLoggedIn) => {
   try {
     const response = await musicBeastApi.patch(`tracks/${updatedTrack.id}`, {
-      ...updatedTrack
+      ...updatedTrack,
     });
     return response;
   } catch (error) {
@@ -135,4 +140,12 @@ const updateTrack = async (updatedTrack, setLoggedIn) => {
   }
 };
 
-export { getTracks, getTrack, createTrack, deleteTrack, updateTrack, logIn, signUp };
+export {
+  getTracks,
+  getTrack,
+  createTrack,
+  deleteTrack,
+  updateTrack,
+  logIn,
+  signUp,
+};
