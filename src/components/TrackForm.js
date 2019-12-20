@@ -8,6 +8,7 @@ class TrackForm extends React.Component {
   constructor(props) {
     super(props);
     const { track } = props;
+
     this.state = { ...track, artist: track.artist.name };
     this.handleTextOnChange = this.handleTextOnChange.bind(this);
     this.handleExplicitOnChange = this.handleExplicitOnChange.bind(this);
@@ -49,7 +50,7 @@ class TrackForm extends React.Component {
       setEditTrackModalOpen,
       page,
       tracksPerPage,
-      setLoading
+      setLoading,
     } = this.props;
 
     // If we don't have id we are creating a new track
@@ -59,11 +60,11 @@ class TrackForm extends React.Component {
       const newTrack = {
         title,
         artist: {
-          name: artist
+          name: artist,
         },
         explicit,
         lyrics,
-        file
+        file,
       };
 
       await createTrack(newTrack);
@@ -78,11 +79,11 @@ class TrackForm extends React.Component {
         id,
         title,
         artist: {
-          name: artist
+          name: artist,
         },
         explicit,
         lyrics,
-        file
+        file,
       };
 
       await updateTrack(updatedTrack);
@@ -98,7 +99,7 @@ class TrackForm extends React.Component {
       artist = '',
       explicit = false,
       lyrics = '',
-      file = ''
+      file = '',
     } = this.state;
 
     return (
@@ -107,6 +108,7 @@ class TrackForm extends React.Component {
           removeFile={this.handleRemoveFile}
           onChange={this.handleFileOnChange}
           file={file}
+          title={title}
         />
         <input
           type="text"
@@ -149,7 +151,11 @@ class TrackForm extends React.Component {
           value={String(lyrics)}
           placeholder="Lyrics"
         />
-        <button className="track-form-submit" type="submit" onClick={this.handleSubmit}>
+        <button
+          className="track-form-submit"
+          type="submit"
+          onClick={this.handleSubmit}
+        >
           Submit
         </button>
       </form>
@@ -163,8 +169,9 @@ TrackForm.propTypes = {
   updateTrackList: PropTypes.func.isRequired,
   setLoading: PropTypes.func.isRequired,
   setEditTrackModalOpen: PropTypes.func,
-  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  page: PropTypes.number.isRequired
+  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 TrackForm.defaultProps = {
@@ -174,10 +181,10 @@ TrackForm.defaultProps = {
     explicit: false,
     file: '',
     isrc: '',
-    lyrics: ''
+    lyrics: '',
   },
   setModalIsOpen: Function.prototype,
-  setEditTrackModalOpen: Function.prototype
+  setEditTrackModalOpen: Function.prototype,
 };
 
 export default TrackForm;
