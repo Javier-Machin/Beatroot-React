@@ -45,7 +45,7 @@ const MusicBeast = () => {
   if (!loggedIn) return <AuthForm setLoggedIn={setLoggedIn} />;
 
   return (
-    <div className="app-container">
+    <div className="app-container" data-testid="app-container">
       <Header
         page={page}
         setPage={setPage}

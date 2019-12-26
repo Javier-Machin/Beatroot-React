@@ -1,6 +1,6 @@
 .audio-container {
   position: fixed;
-  background: white;
+  background: #F1F3F4;
   border-radius: 5px;
   border: 2px solid var(--main-color);
   bottom: 0;
@@ -9,7 +9,7 @@
   width: 300px;
 }
 
-audio {
+audio, video {
   padding: 1px;
   outline-color: red;
   align-self: center;

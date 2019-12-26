@@ -6,7 +6,11 @@ import './css/audioplayer.css';
 const AudioPlayer = props => {
   const [playing, setPlaying] = useState(false);
   const { track = {}, shouldPlay, setShouldPlay } = props;
-  const { title = '- Welcome to Music Beast Manager', artist = {}, file = '' } = track;
+  const {
+    title = '- Welcome to Music Beast Manager',
+    artist = {},
+    file = '',
+  } = track;
   const { name = '' } = artist;
 
   const playerRef = React.createRef();
@@ -32,6 +36,8 @@ const AudioPlayer = props => {
         ref={playerRef}
         data-testid="audio-player"
         className="audio-player"
+        config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+        onContextMenu={e => e.preventDefault()}
         width="300px"
         height="50px"
         url={file}
@@ -45,7 +51,7 @@ const AudioPlayer = props => {
 AudioPlayer.propTypes = {
   track: PropTypes.object.isRequired,
   setShouldPlay: PropTypes.func.isRequired,
-  shouldPlay: PropTypes.bool.isRequired
+  shouldPlay: PropTypes.bool.isRequired,
 };
 
 export default AudioPlayer;
