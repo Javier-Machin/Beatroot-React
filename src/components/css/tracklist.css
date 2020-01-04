@@ -8,7 +8,7 @@
   display: grid;
   border-radius: 5px;
   align-content: center;
-  margin: 0.6rem 0;
+  margin: 0.6rem 5px;
   max-width: 560px;
   max-height: 190px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -42,6 +42,8 @@
   display: flex;
   justify-content: center;
   border: none;
+  border-left: 3px solid white;
+  border-right: 3px solid white;
   background: transparent;
   outline-color: var(--main-color);
   overflow: hidden;
@@ -83,6 +85,9 @@
 
 .track-icons-container {
   grid-area: c;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
 }
 
 .track-icons-container button {

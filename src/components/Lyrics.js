@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './css/lyrics.css';
 
-const Lyrics = (props) => {
+const Lyrics = props => {
   const { title, artist } = props;
   let { selectedLyrics } = props;
 
@@ -25,18 +25,15 @@ const Lyrics = (props) => {
 };
 
 Lyrics.propTypes = {
-  selectedLyrics: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
+  selectedLyrics: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   title: PropTypes.string,
-  artist: PropTypes.string
+  artist: PropTypes.string,
 };
 
 Lyrics.defaultProps = {
   selectedLyrics: 'No lyrics available for this song',
   title: '',
-  artist: ''
+  artist: '',
 };
 
 export default Lyrics;

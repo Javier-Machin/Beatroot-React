@@ -148,7 +148,7 @@ class TrackForm extends React.Component {
           className="lyrics-input"
           name="lyrics"
           onChange={this.handleTextOnChange}
-          value={String(lyrics)}
+          value={lyrics && String(lyrics)}
           placeholder="Lyrics"
         />
         <button

@@ -102,3 +102,19 @@
   cursor: pointer;
   outline-color: var(--main-color);
 }
+
+@media (max-width: 600px) {
+  .header-container {
+    grid-template-areas:
+      'a'
+      'b'
+      'c';
+    grid-template-columns: 1fr;
+  }
+  .logo-container {
+    justify-content: center;
+  }
+  .logo-secondary {
+    margin-left: 120px;
+  }
+}
