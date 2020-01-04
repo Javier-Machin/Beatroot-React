@@ -37,7 +37,7 @@ const getTracks = async (page = 1, tracksPerPage = 10, setLoggedIn) => {
   }
 };
 
-const logIn = async (email, password, setLoggedIn) => {
+const logIn = async (email, password) => {
   try {
     const response = await musicBeastApi.post('/auth/login', {
       email,
@@ -45,20 +45,19 @@ const logIn = async (email, password, setLoggedIn) => {
     });
 
     const { data = {} } = response;
-    const { auth_token = '' } = data;
+    const { auth_token: authToken = '' } = data;
 
-    if (auth_token) {
-      cookies.set('auth', auth_token, { path: '/' });
-      setLoggedIn(true);
+    if (authToken) {
+      cookies.set('auth', authToken, { path: '/' });
+      return true;
     }
-
-    return response;
+    return false;
   } catch (error) {
     return { error };
   }
 };
 
-const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
+const signUp = async (name, email, password, passwordConfirm) => {
   try {
     const response = await musicBeastApi.post('/signup', {
       name,
@@ -68,14 +67,13 @@ const signUp = async (name, email, password, passwordConfirm, setLoggedIn) => {
     });
 
     const { data = {} } = response;
-    const { auth_token = '' } = data;
+    const { auth_token: authToken = '' } = data;
 
-    if (auth_token) {
-      cookies.set('auth', auth_token, { path: '/' });
-      setLoggedIn(true);
+    if (authToken) {
+      cookies.set('auth', authToken, { path: '/' });
+      return true;
     }
-
-    return response;
+    return false;
   } catch (error) {
     return { error };
   }

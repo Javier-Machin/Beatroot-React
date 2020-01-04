@@ -12,18 +12,32 @@ const AuthForm = props => {
   const handleNameOnChange = ({ target }) => setName(target.value);
   const handleEmailOnChange = ({ target }) => setEmail(target.value);
   const handlePasswordOnChange = ({ target }) => setPassword(target.value);
-  const handlePasswordConfirmOnChange = ({ target }) => setPasswordConfirm(target.value);
+  const handlePasswordConfirmOnChange = ({ target }) =>
+    setPasswordConfirm(target.value);
   const handleSwitchToSignUp = () => setSignUpMode(!signUpMode);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    const { setLoggedIn } = props;
+    const { setLoggedIn, setUserName } = props;
 
     if (signUpMode) {
-      signUp(name, email, password, passwordConfirm, setLoggedIn);
+      const signUpResponse = await signUp(
+        name,
+        email,
+        password,
+        passwordConfirm,
+      );
+      if (signUpResponse) {
+        setUserName(email);
+      }
+      setLoggedIn(signUpResponse);
       return;
     }
-    logIn(email, password, setLoggedIn);
+    const logInResponse = await logIn(email, password, setLoggedIn);
+    if (logInResponse) {
+      setUserName(email);
+    }
+    setLoggedIn(logInResponse);
   };
 
   return (
@@ -70,7 +84,11 @@ const AuthForm = props => {
           required
         />
       )}
-      <button className="track-form-submit" type="submit" onClick={handleSubmit}>
+      <button
+        className="track-form-submit"
+        type="submit"
+        onClick={handleSubmit}
+      >
         Submit
       </button>
       {!signUpMode ? (
@@ -95,7 +113,7 @@ const AuthForm = props => {
 };
 
 AuthForm.propTypes = {
-  setLoggedIn: PropTypes.func.isRequired
+  setLoggedIn: PropTypes.func.isRequired,
 };
 
 export default AuthForm;

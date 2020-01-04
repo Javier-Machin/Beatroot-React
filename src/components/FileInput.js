@@ -17,7 +17,7 @@ const FileInput = props => {
       <label htmlFor="file">Upload audio</label>
       {file && title && (
         <button type="button" className="delete-file-btn" onClick={removeFile}>
-          {'Delete current audio'}
+          Delete current audio
           <img
             className="icon icon-delete"
             alt="close modal icon"

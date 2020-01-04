@@ -6,6 +6,7 @@ import TrackForm from './components/TrackForm';
 import AudioPlayer from './components/AudioPlayer';
 import ModalWindow from './components/ModalWindow';
 import AuthForm from './components/AuthForm';
+import UserInfo from './components/UserInfo';
 import './components/css/music-beast.css';
 
 const MusicBeast = () => {
@@ -14,6 +15,7 @@ const MusicBeast = () => {
   const [selectedTrackToPlay, setSelectedTrackToPlay] = useState({});
   const [shouldPlay, setShouldPlay] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
@@ -42,7 +44,8 @@ const MusicBeast = () => {
     };
   }, [page, tracksPerPage, loggedIn]);
 
-  if (!loggedIn) return <AuthForm setLoggedIn={setLoggedIn} />;
+  if (!loggedIn)
+    return <AuthForm setLoggedIn={setLoggedIn} setUserName={setUserName} />;
 
   return (
     <div className="app-container" data-testid="app-container">
@@ -53,6 +56,11 @@ const MusicBeast = () => {
         setTracksPerPage={setTracksPerPage}
         paginationData={paginationData}
         loading={loading}
+      />
+      <UserInfo
+        setLoggedIn={setLoggedIn}
+        setUserName={setUserName}
+        userName={userName}
       />
       <main className="main-content">
         <ModalWindow withOpenButton openButtonText="Add New Track">
