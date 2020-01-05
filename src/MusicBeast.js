@@ -15,7 +15,6 @@ const MusicBeast = () => {
   const [selectedTrackToPlay, setSelectedTrackToPlay] = useState({});
   const [shouldPlay, setShouldPlay] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
-  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [page, setPage] = useState(1);
@@ -44,8 +43,7 @@ const MusicBeast = () => {
     };
   }, [page, tracksPerPage, loggedIn]);
 
-  if (!loggedIn)
-    return <AuthForm setLoggedIn={setLoggedIn} setUserName={setUserName} />;
+  if (!loggedIn) return <AuthForm setLoggedIn={setLoggedIn} />;
 
   return (
     <div className="app-container" data-testid="app-container">
@@ -57,11 +55,7 @@ const MusicBeast = () => {
         paginationData={paginationData}
         loading={loading}
       />
-      <UserInfo
-        setLoggedIn={setLoggedIn}
-        setUserName={setUserName}
-        userName={userName}
-      />
+      <UserInfo setLoggedIn={setLoggedIn} />
       <main className="main-content">
         <ModalWindow withOpenButton openButtonText="Add New Track">
           <TrackForm
@@ -78,6 +72,7 @@ const MusicBeast = () => {
           page={page}
           setShouldPlay={setShouldPlay}
           setSelectedTrackToPlay={setSelectedTrackToPlay}
+          setLoggedIn={setLoggedIn}
           loading={loading}
           setLoading={setLoading}
         />

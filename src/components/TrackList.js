@@ -14,7 +14,7 @@ import './css/tracklist.css';
 const TrackList = props => {
   const [selectedTrack, setSelectedTrack] = useState({
     lyrics: '',
-    artist: { name: '' }
+    artist: { name: '' },
   });
   const [editTrackModalOpen, setEditTrackModalOpen] = useState(false);
   const [lyricsModalOpen, setLyricsModalOpen] = useState(false);
@@ -27,7 +27,8 @@ const TrackList = props => {
     setShouldPlay,
     updateTrackList,
     tracksPerPage,
-    page
+    setLoggedIn,
+    page,
   } = props;
 
   const handleTrackPlay = async event => {
@@ -44,7 +45,7 @@ const TrackList = props => {
   const handleDeleteTrack = async event => {
     setLoading(true);
     const clickedTrackId = event.target.name;
-    const response = await deleteTrack(clickedTrackId);
+    const response = await deleteTrack(clickedTrackId, setLoggedIn);
     if (response.status === 204) {
       const updatedTrackList = await getTracks(page, tracksPerPage);
       updateTrackList(updatedTrackList);
@@ -80,7 +81,11 @@ const TrackList = props => {
             const uniqueKey = Date.now() + Math.random() + index;
 
             return (
-              <div className="track-container" data-testid={testId} key={uniqueKey}>
+              <div
+                className="track-container"
+                data-testid={testId}
+                key={uniqueKey}
+              >
                 <button
                   className="track-image-button"
                   type="button"
@@ -148,7 +153,10 @@ const TrackList = props => {
           </ModalWindow>
         )}
         {editTrackModalOpen && !lyricsModalOpen && (
-          <ModalWindow isOpen={editTrackModalOpen} setIsOpen={setEditTrackModalOpen}>
+          <ModalWindow
+            isOpen={editTrackModalOpen}
+            setIsOpen={setEditTrackModalOpen}
+          >
             <TrackForm
               track={selectedTrack}
               updateTrackList={updateTrackList}
@@ -169,10 +177,12 @@ TrackList.propTypes = {
   loading: PropTypes.bool.isRequired,
   setLoading: PropTypes.func.isRequired,
   setSelectedTrackToPlay: PropTypes.func.isRequired,
+  setLoggedIn: PropTypes.func.isRequired,
   setShouldPlay: PropTypes.func.isRequired,
   updateTrackList: PropTypes.func.isRequired,
-  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  page: PropTypes.number.isRequired
+  tracksPerPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default TrackList;

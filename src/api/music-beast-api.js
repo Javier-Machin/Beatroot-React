@@ -45,10 +45,11 @@ const logIn = async (email, password) => {
     });
 
     const { data = {} } = response;
-    const { auth_token: authToken = '' } = data;
+    const { auth_token: authToken = '', user_name: userName } = data;
 
     if (authToken) {
       cookies.set('auth', authToken, { path: '/' });
+      cookies.set('userName', userName, { path: '/' });
       return true;
     }
     return false;
@@ -67,10 +68,11 @@ const signUp = async (name, email, password, passwordConfirm) => {
     });
 
     const { data = {} } = response;
-    const { auth_token: authToken = '' } = data;
+    const { auth_token: authToken = '', user_name: userName } = data;
 
     if (authToken) {
       cookies.set('auth', authToken, { path: '/' });
+      cookies.set('userName', userName, { path: '/' });
       return true;
     }
     return false;
@@ -122,7 +124,11 @@ const createTrack = async (newTrack, setLoggedIn) => {
 
 const deleteTrack = async (trackId, setLoggedIn) => {
   try {
-    const response = await musicBeastApi.delete(`tracks/${trackId}`);
+    const response = await musicBeastApi.delete(`tracks/${trackId}`, {
+      headers: {
+        Authorization: cookies.get('auth') || '',
+      },
+    });
     return response;
   } catch (error) {
     if (String(error).includes('422')) {

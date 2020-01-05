@@ -3,7 +3,7 @@
   background-color: var(--main-color);
   border-radius: 5px;
   min-height: 500px;
-  max-width: 500px;
+  max-width: 510px;
   min-width: 210px;
   display: flex;
   flex-direction: column;

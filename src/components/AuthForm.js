@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import './css/authform.css';
 import { signUp, logIn } from '../api/music-beast-api';
 
 const AuthForm = props => {
@@ -8,17 +9,18 @@ const AuthForm = props => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [signUpMode, setSignUpMode] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleNameOnChange = ({ target }) => setName(target.value);
   const handleEmailOnChange = ({ target }) => setEmail(target.value);
   const handlePasswordOnChange = ({ target }) => setPassword(target.value);
   const handlePasswordConfirmOnChange = ({ target }) =>
     setPasswordConfirm(target.value);
-  const handleSwitchToSignUp = () => setSignUpMode(!signUpMode);
+  const handleSwitchForm = () => setSignUpMode(!signUpMode);
 
   const handleSubmit = async event => {
     event.preventDefault();
-    const { setLoggedIn, setUserName } = props;
+    const { setLoggedIn } = props;
 
     if (signUpMode) {
       const signUpResponse = await signUp(
@@ -27,21 +29,35 @@ const AuthForm = props => {
         password,
         passwordConfirm,
       );
-      if (signUpResponse) {
-        setUserName(email);
+      if (signUpResponse.error) {
+        const { response = {} } = signUpResponse.error;
+        const { data = {} } = response;
+        const { message = 'Account creation failed' } = data;
+        setErrorMessage(message);
+        return;
       }
-      setLoggedIn(signUpResponse);
+      if (signUpResponse) {
+        setLoggedIn(signUpResponse);
+      }
       return;
     }
     const logInResponse = await logIn(email, password, setLoggedIn);
-    if (logInResponse) {
-      setUserName(email);
+    if (logInResponse.error) {
+      const { response = {} } = logInResponse.error;
+      const { data = {} } = response;
+      const { message = 'Invalid credentials' } = data;
+      setErrorMessage(message);
+      return;
     }
-    setLoggedIn(logInResponse);
+
+    if (logInResponse) {
+      setLoggedIn(logInResponse);
+    }
   };
 
   return (
-    <form className="track-form">
+    <form className="auth-form">
+      {errorMessage && <div className="auth-error-msg">{errorMessage}</div>}
       {signUpMode && (
         <input
           type="text"
@@ -84,26 +100,22 @@ const AuthForm = props => {
           required
         />
       )}
-      <button
-        className="track-form-submit"
-        type="submit"
-        onClick={handleSubmit}
-      >
+      <button className="auth-form-btn" type="submit" onClick={handleSubmit}>
         Submit
       </button>
       {!signUpMode ? (
         <button
-          className="track-form-submit"
+          className="auth-form-btn"
           type="button"
-          onClick={handleSwitchToSignUp}
+          onClick={handleSwitchForm}
         >
           Sign Up
         </button>
       ) : (
         <button
-          className="track-form-submit"
+          className="auth-form-btn"
           type="button"
-          onClick={handleSwitchToSignUp}
+          onClick={handleSwitchForm}
         >
           Log In
         </button>
