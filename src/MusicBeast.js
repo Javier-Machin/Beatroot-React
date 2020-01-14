@@ -16,7 +16,7 @@ const MusicBeast = () => {
   const [shouldPlay, setShouldPlay] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState('');
   const [page, setPage] = useState(1);
 
   const updateTrackList = response => {
@@ -45,7 +45,7 @@ const MusicBeast = () => {
 
   if (!loggedIn) return <AuthForm setLoggedIn={setLoggedIn} />;
 
-  return (
+  return tracks ? (
     <div className="app-container" data-testid="app-container">
       <Header
         page={page}
@@ -83,7 +83,7 @@ const MusicBeast = () => {
         />
       </main>
     </div>
-  );
+  ) : null;
 };
 
 export default MusicBeast;
