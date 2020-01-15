@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/music-beast-manager/static/css/main.a99242a9.chunk.css",
+    "main.js": "/music-beast-manager/static/js/main.ac585468.chunk.js",
+    "main.js.map": "/music-beast-manager/static/js/main.ac585468.chunk.js.map",
+    "runtime-main.js": "/music-beast-manager/static/js/runtime-main.92286565.js",
+    "runtime-main.js.map": "/music-beast-manager/static/js/runtime-main.92286565.js.map",
+    "static/js/2.b2f729ce.chunk.js": "/music-beast-manager/static/js/2.b2f729ce.chunk.js",
+    "static/js/2.b2f729ce.chunk.js.map": "/music-beast-manager/static/js/2.b2f729ce.chunk.js.map",
+    "index.html": "/music-beast-manager/index.html",
+    "precache-manifest.40f1b7ccc23f4385ed69b93d851cfdca.js": "/music-beast-manager/precache-manifest.40f1b7ccc23f4385ed69b93d851cfdca.js",
+    "service-worker.js": "/music-beast-manager/service-worker.js",
+    "static/css/main.a99242a9.chunk.css.map": "/music-beast-manager/static/css/main.a99242a9.chunk.css.map",
+    "static/js/2.b2f729ce.chunk.js.LICENSE": "/music-beast-manager/static/js/2.b2f729ce.chunk.js.LICENSE",
+    "static/media/edit.png": "/music-beast-manager/static/media/edit.7cecbe97.png",
+    "static/media/logout.svg": "/music-beast-manager/static/media/logout.e1df52e2.svg",
+    "static/media/lyrics.png": "/music-beast-manager/static/media/lyrics.ab36c95c.png",
+    "static/media/track.png": "/music-beast-manager/static/media/track.f67b1dd7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92286565.js",
+    "static/js/2.b2f729ce.chunk.js",
+    "static/css/main.a99242a9.chunk.css",
+    "static/js/main.ac585468.chunk.js"
+  ]
+}
