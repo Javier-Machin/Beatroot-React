@@ -94,7 +94,8 @@ const AuthForm = props => {
         <>
           <h4 className="auth-form-info">SIGN UP</h4>
           <h4 className="auth-form-info">You can use a fake email</h4>
-          {/* next 2 inputs prevent annoying browser behaviour with saved input values */}
+          {/* next 2 inputs prevent annoying browser 
+              behaviour with saved input values */}
           <input
             id="username"
             style={{ display: 'none' }}
