@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/music-beast-manager/static/css/main.0cf540ef.chunk.css",
+    "main.css": "/music-beast-manager/static/css/main.3b57fb59.chunk.css",
     "main.js": "/music-beast-manager/static/js/main.ac585468.chunk.js",
     "main.js.map": "/music-beast-manager/static/js/main.ac585468.chunk.js.map",
     "runtime-main.js": "/music-beast-manager/static/js/runtime-main.92286565.js",
@@ -8,9 +8,9 @@
     "static/js/2.b2f729ce.chunk.js": "/music-beast-manager/static/js/2.b2f729ce.chunk.js",
     "static/js/2.b2f729ce.chunk.js.map": "/music-beast-manager/static/js/2.b2f729ce.chunk.js.map",
     "index.html": "/music-beast-manager/index.html",
-    "precache-manifest.6989464ac72552a7ab2523c23414887c.js": "/music-beast-manager/precache-manifest.6989464ac72552a7ab2523c23414887c.js",
+    "precache-manifest.8e2dced113e686dda7675303490a08e2.js": "/music-beast-manager/precache-manifest.8e2dced113e686dda7675303490a08e2.js",
     "service-worker.js": "/music-beast-manager/service-worker.js",
-    "static/css/main.0cf540ef.chunk.css.map": "/music-beast-manager/static/css/main.0cf540ef.chunk.css.map",
+    "static/css/main.3b57fb59.chunk.css.map": "/music-beast-manager/static/css/main.3b57fb59.chunk.css.map",
     "static/js/2.b2f729ce.chunk.js.LICENSE": "/music-beast-manager/static/js/2.b2f729ce.chunk.js.LICENSE",
     "static/media/edit.png": "/music-beast-manager/static/media/edit.7cecbe97.png",
     "static/media/logout.svg": "/music-beast-manager/static/media/logout.e1df52e2.svg",
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.92286565.js",
     "static/js/2.b2f729ce.chunk.js",
-    "static/css/main.0cf540ef.chunk.css",
+    "static/css/main.3b57fb59.chunk.css",
     "static/js/main.ac585468.chunk.js"
   ]
 }

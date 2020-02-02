@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d511112fa1de05e9c871a8aeff6331ff",
+    "revision": "3c72de8dc1ef666699fc9b37e8dddb10",
     "url": "/music-beast-manager/index.html"
   },
   {
-    "revision": "f920447b5da27fd1f865",
-    "url": "/music-beast-manager/static/css/main.0cf540ef.chunk.css"
+    "revision": "285f069a4e354d2f0b42",
+    "url": "/music-beast-manager/static/css/main.3b57fb59.chunk.css"
   },
   {
     "revision": "67a6a369d25366d47d55",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/music-beast-manager/static/js/2.b2f729ce.chunk.js.LICENSE"
   },
   {
-    "revision": "f920447b5da27fd1f865",
+    "revision": "285f069a4e354d2f0b42",
     "url": "/music-beast-manager/static/js/main.ac585468.chunk.js"
   },
   {
